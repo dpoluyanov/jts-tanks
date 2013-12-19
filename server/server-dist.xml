@@ -1,0 +1,28 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>dist</id>
+    <formats>
+        <format>dir</format>
+        <format>zip</format>
+    </formats>
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <!-- Login dist-->
+        <fileSet>
+            <directory>dist/</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>*.*</include>
+                <include>config/default/**/*.*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>.</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>
+        </dependencySet>
+    </dependencySets>
+</assembly>

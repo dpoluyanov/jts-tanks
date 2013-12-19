@@ -1,0 +1,17 @@
+*.iml
+
+/.idea
+/commons/target
+
+/server/target
+/server/dist/log
+
+/server/dist/config/*.properties
+/.gradle
+/commons/build
+/server/build
+
+/commons/src/generated
+
+/server/src/generated
+/classes

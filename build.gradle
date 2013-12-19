@@ -1,0 +1,9 @@
+subprojects {
+    apply plugin: 'java'
+
+    // Disable the test report for the individual test task
+    test {
+        reports.html.enabled = false
+    }
+    //test.dependsOn(cleanTest)
+}
