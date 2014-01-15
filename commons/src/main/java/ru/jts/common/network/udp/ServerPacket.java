@@ -1,5 +1,6 @@
 package ru.jts.common.network.udp;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
@@ -20,7 +21,19 @@ public abstract class ServerPacket<T extends IClient> {
     }
 
     public void write() {
+        try {
+            before();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         writeImpl();
+    }
+
+    /**
+     * Вызываеся перед записью данных
+     */
+    protected void before() throws Exception {
+
     }
 
     protected void writeByte(int value) {
@@ -43,6 +56,11 @@ public abstract class ServerPacket<T extends IClient> {
         for(int b : values)
             content.writeByte(b);
     }
+
+    protected void writeBytes(ByteBuf buf) {
+        content.writeBytes(buf);
+    }
+
 
 
     protected abstract void writeImpl();

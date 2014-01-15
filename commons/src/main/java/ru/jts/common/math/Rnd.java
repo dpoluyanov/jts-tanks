@@ -36,4 +36,8 @@ public class Rnd {
     public static int nextInt() {
         return random.nextInt();
     }
+
+    public static byte nextDigest() {
+        return (byte) get(9);
+    }
 }

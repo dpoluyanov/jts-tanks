@@ -1,9 +1,10 @@
 package ru.jts.server.network.clientpackets;
 
+import ru.jts.common.math.Rnd;
 import ru.jts.common.network.udp.ClientPacket;
 import ru.jts.common.util.ArrayUtils;
 import ru.jts.server.network.Client;
-import ru.jts.server.network.serverpackets.AuthorizeByPasswordResponse;
+import ru.jts.server.network.serverpackets.AuthorizeResponse;
 
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 public class AuthorizeByPassword extends ClientPacket<Client> {
     private final short sessionId;
+    private byte[] blowFishKey;
 
     public AuthorizeByPassword(short sessionId) {
         this.sessionId = sessionId;
@@ -26,16 +28,18 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
         byte passLength = readByte();
         String pass = readString(passLength); // plain pass
         byte blowFishLength = readByte();
-        byte[] blowFish = readBytes(blowFishLength);
+        blowFishKey = readBytes(blowFishLength);
         byte[] unk = readBytes(16); // unknown
         short unk2 = readShort(); // неизвестно, изменяется при каждом новом подключении, похоже на номер порта
         readShort(); // 0
 
-        System.out.println(ArrayUtils.bytesToHexString(content.copy(content.readerIndex(), content.readableBytes()).array()));
+        //System.out.println(ArrayUtils.bytesToHexString(content.copy(content.readerIndex(), content.readableBytes()).array()));
     }
 
     @Override
     public void runImpl() {
-        getClient().sendPacket(new AuthorizeByPasswordResponse(sessionId));
+        getClient().setBlowFishKey(blowFishKey);
+        getClient().setRandomKey(Rnd.nextInt());
+        getClient().sendPacket(new AuthorizeResponse(sessionId));
     }
 }
