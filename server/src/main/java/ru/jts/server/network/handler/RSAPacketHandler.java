@@ -64,17 +64,17 @@ public class RSAPacketHandler implements IUDPServerPacketHandler<Client> {
         ByteBuf packetBuf = Unpooled.copiedBuffer(packetData).order(ByteOrder.LITTLE_ENDIAN);
         packetBuf = decryptBuffer(packetBuf);
 
-        int _0x01 = packetBuf.readUnsignedByte();
-        short opcode = packetBuf.readUnsignedByte();
+        int opcode = packetBuf.readUnsignedByte();
+        //short opcode = packetBuf.readUnsignedByte();
 
         ClientPacket<Client> packet = null;
         switch (opcode) {
-            case 0x86:
+            case 0x01:
                 packet = new AuthorizeByPassword(sessionId);
                 break;
-            case 0xD7:
-                packet = new AuthorizeBySession();
-                break;
+            //case 0x02:
+            //    packet = new AuthorizeBySession();
+            //    break;
             default:
                 Log.w(LOG_TAG, "Unknown opcode {}", Integer.toHexString(opcode));
                 Log.w(LOG_TAG, ArrayUtils.bytesToHexString(packetBuf.copy(packetBuf.readerIndex(), packetBuf.readableBytes()).array()));

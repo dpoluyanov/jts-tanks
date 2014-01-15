@@ -1,7 +1,14 @@
 package ru.jts.common.network.udp;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
+import ru.jts.common.util.ArrayUtils;
+import sun.org.mozilla.javascript.internal.json.JsonParser;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,24 +27,28 @@ public abstract class ClientPacket<T extends IClient> implements Runnable {
     }
 
     public abstract void readImpl();
+    public abstract void runImpl();
 
     @Override
     public void run() {
-        read();
-    }
-
-    private void read() {
         readImpl();
+        runImpl();
     }
 
-    protected String readBrackets() {
-        Matcher matcher = bracketsPattern.matcher(new String(content.array()));
-        String s = "{}";
-        if (matcher.find()) {
-            s = matcher.group(1);
-            skipBytes(s.getBytes().length - 1);
+    protected Map<String, String> readJson() {
+        short size = content.readUnsignedByte();
+        byte[] json = new byte[size];
+        content.readBytes(json);
+
+        ObjectMapper om = new ObjectMapper();
+        try {
+            Map<String, String> mapObject = om.readValue(json, new TypeReference<Map<String,String>>(){});
+
+            return mapObject;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return s;
+        return null;
     }
 
     private void skipBytes(int count) {

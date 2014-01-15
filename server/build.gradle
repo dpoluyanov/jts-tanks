@@ -26,6 +26,7 @@ dependencies {
     compile project(":commons")
 
     compile 'org.slf4j:slf4j-api:1.7.5'
+
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
 
     compile 'mysql:mysql-connector-java:5.1.27'

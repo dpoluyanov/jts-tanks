@@ -4,6 +4,8 @@ import ru.jts.common.log.Log;
 import ru.jts.common.network.udp.ClientPacket;
 import ru.jts.server.network.Client;
 
+import java.util.Map;
+
 /**
  * @author: Camelion
  * @date: 12.11.13/14:06
@@ -11,8 +13,8 @@ import ru.jts.server.network.Client;
 public class AuthorizeBySession extends ClientPacket<Client> {
     @Override
     public void readImpl() {
-        String serializedSession = readBrackets();
-        Log.w(serializedSession);
+        Map<String, String> jsonMsg = readJson();
+
         byte _0x7D = readByte();
         byte unk = readByte(); // 0x00
         byte blowFishLength = readByte();
@@ -22,5 +24,10 @@ public class AuthorizeBySession extends ClientPacket<Client> {
         readShort(); // 0
 
         //System.out.println(ArrayUtils.bytesToHexString(content.copy(content.readerIndex(), content.readableBytes()).array()));
+    }
+
+    @Override
+    public void runImpl() {
+
     }
 }

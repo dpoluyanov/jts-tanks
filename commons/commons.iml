@@ -45,6 +45,9 @@
     <orderEntry type="library" exported="" name="Gradle: querydsl-core-3.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: netty-all-4.0.13.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: asm-3.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: jackson-annotations-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: jackson-databind-2.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: jackson-core-2.3.0" level="project" />
   </component>
 </module>
 
