@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3228138441">
+    <data-source source="LOCAL" name="PersistenceUnit" uuid="64f2d8ba-1fad-4f68-9cc2-363e21b7c066">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost/tanks?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfd8dfc5dfc5dfde</user-password>
+      <libraries>
+        <library>
+          <url>file://C:\Users\Дмитрий\.gradle\caches\modules-2\files-2.1\mysql\mysql-connector-java\5.1.27\2e4fbf71af3fa214951aa32bb6b39076e4e01b6f\mysql-connector-java-5.1.27.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

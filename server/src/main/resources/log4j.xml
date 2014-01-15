@@ -20,6 +20,9 @@
     <logger name="org.jboss.logging">
         <level value="warn"/>
     </logger>
+    <logger name="io.netty">
+        <level value="warn"/>
+    </logger>
     <root>
         <level value="debug"/>
         <appender-ref ref="CONSOLE"/>

@@ -21,7 +21,7 @@ configurations {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.11'
+    testCompile 'junit:junit:+'
 
     compile project(":commons")
 
@@ -30,14 +30,14 @@ dependencies {
 
     compile 'mysql:mysql-connector-java:5.1.27'
 
-    compile 'org.hibernate:hibernate-core:4.2.8.Final'
-    compile 'org.hibernate:hibernate-entitymanager:4.2.8.Final'
+    compile 'org.hibernate:hibernate-core:4.3.0.Final'
+    compile 'org.hibernate:hibernate-entitymanager:4.3.0.Final'
 
-    compile 'com.mysema.querydsl:querydsl-core:3.2.4'
-    compile 'com.mysema.querydsl:querydsl-jpa:3.2.4'
-    compile 'com.mysema.querydsl:querydsl-sql:3.2.4'
+    compile ('com.mysema.querydsl:querydsl-core:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
+    compile ('com.mysema.querydsl:querydsl-jpa:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
+    compile ('com.mysema.querydsl:querydsl-sql:3.3.0')  { exclude module: 'hibernate-jpa-2.0-api' }
 
-    querydslapt 'com.mysema.querydsl:querydsl-apt:3.2.4'
+    querydslapt 'com.mysema.querydsl:querydsl-apt:3.3.0'
 
     compile fileTree(dir: 'lib', include: '*.jar')
 }

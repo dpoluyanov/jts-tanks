@@ -19,6 +19,8 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
     @Override
     public void readImpl() {
         byte unk1 = readByte();
+        // JSON Message
+        // session: = md5Hex of Client HWID
         String serializedSession = readBrackets();
         byte passLength = readByte();
         String pass = readString(passLength); // plain pass
@@ -29,6 +31,8 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
         readShort(); // 0
 
         getClient().sendPacket(new AuthorizeByPasswordResponse(sessionId));
+
+
         System.out.println(ArrayUtils.bytesToHexString(content.copy(content.readerIndex(), content.readableBytes()).array()));
     }
 }
