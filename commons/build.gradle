@@ -30,7 +30,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
     compile 'org.bouncycastle:bcprov-jdk16:1.46'
 
-    compile 'io.netty:netty-all:4.0.13.Final'
+    compile 'io.netty:netty-all:4.0.14.Final'
 
     compile 'mysql:mysql-connector-java:5.1.27'
 
