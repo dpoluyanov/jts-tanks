@@ -5,6 +5,7 @@ import ru.jts.common.network.udp.ClientPacket;
 import ru.jts.common.util.ArrayUtils;
 import ru.jts.server.network.Client;
 import ru.jts.server.network.serverpackets.AuthorizeResponse;
+import ru.jts.server.network.serverpackets.InvalidPassword;
 
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
         blowFishKey = readBytes(blowFishLength);
         byte[] unk = readBytes(16); // unknown
         short unk2 = readShort(); // неизвестно, изменяется при каждом новом подключении, похоже на номер порта
-        readShort(); // 0
+        readShort();
 
         //System.out.println(ArrayUtils.bytesToHexString(content.copy(content.readerIndex(), content.readableBytes()).array()));
     }
@@ -40,6 +41,8 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
     public void runImpl() {
         getClient().setBlowFishKey(blowFishKey);
         getClient().setRandomKey(Rnd.nextInt());
+
         getClient().sendPacket(new AuthorizeResponse(sessionId));
+        //getClient().sendPacket(new InvalidPassword(sessionId));
     }
 }

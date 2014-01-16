@@ -23,6 +23,8 @@ public class CryptEngine {
     }
 
     private static final int BLOCK_SIZE = 8;
+    public static final int ZERO_TRAILING_MODE = 0;
+    public static final int RANDOM_BYTES_MODE = 1;
     private static CryptEngine ourInstance = new CryptEngine();
     private Random random;
 
@@ -54,20 +56,18 @@ public class CryptEngine {
         return data;
     }
 
-    public byte[] encrypt(byte[] data, byte key[]) {
+    public byte[] encrypt(byte[] data, byte key[], int padding) {
         byte[] output = null;
         try {
-            byte additional = (byte) (8 - (data.length) % 8);
-            byte[] addBytes = new byte[additional - 1];
-            random.nextBytes(addBytes);
-            ByteBuf buf = Unpooled.buffer(data.length + additional).order(ByteOrder.LITTLE_ENDIAN);
-            buf.writeBytes(data, 0, data.length - 4);
-            buf.writeBytes(addBytes);
-            buf.writeBytes(data, data.length - 4, 4);
-            buf.writeByte(additional);
+            if(padding == ZERO_TRAILING_MODE) {
+                data = zeroPadding(data);
+            } else if (padding == RANDOM_BYTES_MODE) {
+                data = randomBytesPadding(data);
+            }
 
-            output = buf.array();
-            byte[] d = buf.copy().array();
+            byte[] original = new byte[data.length];
+            System.arraycopy(data, 0, original, 0, data.length);
+            output = data;
 
             Cipher rsa = Cipher.getInstance("Blowfish/ECB/NoPadding", BouncyCastleProvider.PROVIDER_NAME);
             SecretKeySpec keySpec = new SecretKeySpec(key, "Blowfish");
@@ -75,7 +75,7 @@ public class CryptEngine {
             for (int i = 0; i < output.length; i += BLOCK_SIZE) {
                 if (i > 0) {
                     for (int j = i; j < i + BLOCK_SIZE; j++) {
-                        output[j] ^= d[j - BLOCK_SIZE];
+                        output[j] ^= original[j - BLOCK_SIZE];
                     }
                 }
                 rsa.doFinal(output, i, BLOCK_SIZE, output, i);
@@ -84,5 +84,27 @@ public class CryptEngine {
             e.printStackTrace();
         }
         return output;
+    }
+
+    private byte[] randomBytesPadding(byte[] data) {
+        byte additional = (byte) (8 - (data.length) % 8);
+        byte[] addBytes = new byte[additional - 1];
+        random.nextBytes(addBytes);
+        ByteBuf buf = Unpooled.buffer(data.length + additional).order(ByteOrder.LITTLE_ENDIAN);
+        buf.writeBytes(data, 0, data.length - 4);
+        buf.writeBytes(addBytes);
+        buf.writeBytes(data, data.length - 4, 4);
+        buf.writeByte(additional);
+        return buf.array();
+    }
+
+    private byte[] zeroPadding(byte[] data) {
+        int additional = (8 - (data.length) % 8) % 8;
+        byte[] out = data;
+        if(additional > 0) {
+            out = new byte[data.length + additional];
+            System.arraycopy(data, 0, out, 0, data.length);
+        }
+        return out;
     }
 }

@@ -40,4 +40,10 @@ public class Rnd {
     public static byte nextDigest() {
         return (byte) get(9);
     }
+
+    public static byte[] nextBytes(int count) {
+        byte[] data = new byte[count];
+        random.nextBytes(data);
+        return data;
+    }
 }

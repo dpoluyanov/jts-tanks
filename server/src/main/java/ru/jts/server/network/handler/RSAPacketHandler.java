@@ -56,16 +56,15 @@ public class RSAPacketHandler implements IUDPServerPacketHandler<Client> {
         byte b3 = buf.readByte(); // 8
 
         byte[] packetData = new byte[buf.readableBytes() - 4];
-        buf.readShort(); // 2
+        short unk3 = buf.readShort(); // 00 02
         buf.readBytes(packetData);
-        buf.readShort(); // 2
+        short unk4 = buf.readShort(); // 02 00
         buf.clear();
 
         ByteBuf packetBuf = Unpooled.copiedBuffer(packetData).order(ByteOrder.LITTLE_ENDIAN);
         packetBuf = decryptBuffer(packetBuf);
 
         int opcode = packetBuf.readUnsignedByte();
-        //short opcode = packetBuf.readUnsignedByte();
 
         ClientPacket<Client> packet = null;
         switch (opcode) {

@@ -61,7 +61,10 @@ public abstract class ServerPacket<T extends IClient> {
         content.writeBytes(buf);
     }
 
-
+    protected void writeString(String str) {
+        content.writeByte(str.length());
+        content.writeBytes(str.getBytes());
+    }
 
     protected abstract void writeImpl();
 

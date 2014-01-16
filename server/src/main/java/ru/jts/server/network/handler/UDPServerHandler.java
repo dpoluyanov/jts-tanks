@@ -21,7 +21,7 @@ public class UDPServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
-        Client client = ClientManger.getInstance().getClientCreateIfNeed(packet.recipient(), packet.sender(), ctx.channel());
+        Client client = ClientManger.getInstance().getClientCreateIfNeed(packet.sender(), ctx.channel());
 
         ByteBuf buf = packet.content().order(ByteOrder.LITTLE_ENDIAN);
 

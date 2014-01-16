@@ -7,10 +7,12 @@ import ru.jts.common.math.Rnd;
 import ru.jts.common.network.udp.IClient;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
 import ru.jts.common.network.udp.ServerPacket;
-import ru.jts.server.network.crypt.CryptEngine;
 import ru.jts.server.network.handler.RSAPacketHandler;
 
+import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 
 /**
  * @author: Camelion
@@ -19,19 +21,17 @@ import java.net.InetSocketAddress;
  */
 public class Client implements IClient {
 
-    private final InetSocketAddress address;
-    private final InetSocketAddress serverAddress;
     private Channel channel;
     private IUDPServerPacketHandler<Client> packetHandler;
     private byte[] blowFishKey;
     private int randomKey;
     private String token2;
+    private InetSocketAddress myAddress;
 
-    public Client(InetSocketAddress serverAddress, InetSocketAddress address, Channel channel) {
-        this.serverAddress = serverAddress;
-        this.address = address;
+    public Client(InetSocketAddress myAddress, Channel channel) {
         this.channel = channel;
         this.packetHandler = RSAPacketHandler.getInstance();
+        this.myAddress = myAddress;
     }
 
     public IUDPServerPacketHandler<Client> getPacketHandler() {
@@ -45,26 +45,19 @@ public class Client implements IClient {
         ByteBuf buf = packet.getContent();
         buf = getPacketHandler().encrypt(buf);
 
-        channel.writeAndFlush(new DatagramPacket(buf, serverAddress));
+        channel.writeAndFlush(new DatagramPacket(buf, myAddress));
     }
 
     public void setBlowFishKey(byte[] blowFishKey) {
         this.blowFishKey = blowFishKey;
     }
 
-    private byte[] getBlowFishKey() {
+    public byte[] getBlowFishKey() {
         return blowFishKey;
     }
 
     public InetSocketAddress getServerAddress() {
         return (InetSocketAddress) channel.localAddress();
-    }
-
-    public byte[] encrypt(byte[] array) {
-        if (getBlowFishKey() == null)
-            throw new NullPointerException("Blowfish key is null");
-
-        return CryptEngine.getInstance().encrypt(array, getBlowFishKey());
     }
 
     public int getRandomKey() {
@@ -77,7 +70,7 @@ public class Client implements IClient {
 
     public String generateToken2() {
         StringBuilder token = new StringBuilder();
-        for (int i = 0; i < 39; i++) {
+        for (int i = 0; i < 38; i++) {
             token.append(Rnd.nextDigest());
         }
 
