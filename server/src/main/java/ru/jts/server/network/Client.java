@@ -70,7 +70,7 @@ public class Client implements IClient {
 
     public String generateToken2() {
         StringBuilder token = new StringBuilder();
-        for (int i = 0; i < 38; i++) {
+        for (int i = 0; i < 39; i++) {
             token.append(Rnd.nextDigest());
         }
 

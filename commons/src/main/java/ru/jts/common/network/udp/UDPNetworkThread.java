@@ -12,7 +12,7 @@ import ru.jts.common.network.NetworkConfig;
  * @author: Camelion
  * @date: 01.11.13/22:25
  */
-public class UDPNetworkThread {
+public class UDPNetworkThread extends Thread {
     private final NetworkConfig networkConfig;
     private final ChannelHandler channelHandler;
 
@@ -21,7 +21,8 @@ public class UDPNetworkThread {
         this.channelHandler = channelHandler;
     }
 
-    public void startAsServer() {
+    @Override
+    public void run() {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();

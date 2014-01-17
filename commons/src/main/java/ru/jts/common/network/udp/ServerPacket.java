@@ -1,8 +1,8 @@
 package ru.jts.common.network.udp;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import ru.jts.common.util.ArrayUtils;
 
 import java.nio.ByteOrder;
 
@@ -27,6 +27,19 @@ public abstract class ServerPacket<T extends IClient> {
             e.printStackTrace();
         }
         writeImpl();
+        makeHeader();
+    }
+
+    private void makeHeader() {
+        ByteBuf tempContent = Unpooled.buffer().capacity(content.readableBytes() + 7).order(ByteOrder.LITTLE_ENDIAN);
+        tempContent.writeShort(0x00);
+        tempContent.writeByte(0xFF);
+        tempContent.writeInt(content.readableBytes());
+        tempContent.writeBytes(content);
+
+        content.clear();
+        content = tempContent;
+        System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
     }
 
     /**
@@ -53,7 +66,7 @@ public abstract class ServerPacket<T extends IClient> {
     }
 
     protected void writeBytes(int... values) {
-        for(int b : values)
+        for (int b : values)
             content.writeByte(b);
     }
 

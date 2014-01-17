@@ -1,6 +1,7 @@
 package ru.jts.server.network.serverpackets;
 
 import ru.jts.common.network.udp.ServerPacket;
+import ru.jts.common.util.ArrayUtils;
 import ru.jts.server.network.Client;
 
 /**
@@ -16,13 +17,12 @@ public class InvalidPassword extends ServerPacket<Client> {
 
     @Override
     protected void writeImpl() {
-        writeShort(0x00);
-        writeByte(0xFF);
-        writeByte(0x17);
-        writeBytes(0x00, 0x00, 0x00);
+
         writeShort(sessionId);
-        writeBytes(0x00, 0x00);
-        writeByte(0x43);
+        writeShort(0x00);
+        writeByte(0x43); // LOGIN_REJECTED_INVALID_PASSWORD
         writeString("Invalid password.");
+
+        System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
     }
 }

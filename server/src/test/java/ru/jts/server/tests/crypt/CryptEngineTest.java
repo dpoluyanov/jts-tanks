@@ -4,8 +4,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.jts.common.math.Rnd;
-import ru.jts.common.util.ArrayUtils;
 import ru.jts.server.network.crypt.CryptEngine;
 
 import java.security.Security;

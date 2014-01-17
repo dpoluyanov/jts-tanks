@@ -37,6 +37,7 @@ public abstract class ClientPacket<T extends IClient> implements Runnable {
 
     protected Map<String, String> readJson() {
         short size = content.readUnsignedByte();
+
         byte[] json = new byte[size];
         content.readBytes(json);
 

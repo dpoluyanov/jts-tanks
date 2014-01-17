@@ -56,7 +56,16 @@ public class Server {
 
         UDPNetworkThread networkThread = new UDPNetworkThread(networkConfig, new UDPServerHandler());
 
-        networkThread.startAsServer();
+        networkThread.start();
+
+        /*
+        networkConfig = new NetworkConfig(Config.getString("network.game_clients.address"),
+                Config.getInt("network.game_clients.port") + 1, Config.getInt("network.game_clients.thread_count"));
+
+        networkThread = new UDPNetworkThread(networkConfig, new UDPServerHandler());
+        networkThread.start(); */
+
+
         Log.i(LOG_TAG, "Clients NetworkThread loaded on {}:{}", Config.getString("network.game_clients.address"),
                 Config.getInt("network.game_clients.port"));
     }
