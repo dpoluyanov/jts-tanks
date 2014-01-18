@@ -61,7 +61,7 @@ public class KeyStore {
 		}
 	}
 
-	public PrivateKey getKeyPair() {
+	public PrivateKey getPrivateKey() {
 		return keyPair.getPrivate();
 	}
 }

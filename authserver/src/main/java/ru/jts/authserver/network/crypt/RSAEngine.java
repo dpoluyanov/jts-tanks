@@ -57,7 +57,7 @@ public class RSAEngine {
 	 */
 	private byte[] decrypt0(byte[] data, int from, int length) {
 		ByteBuf buf = Unpooled.buffer().order(ByteOrder.LITTLE_ENDIAN);
-		PrivateKey privateKey = KeyStore.getInstance().getKeyPair();
+		PrivateKey privateKey = KeyStore.getInstance().getPrivateKey();
 		try {
 			Cipher rsa = Cipher.getInstance("RSA/ECB/OAEPWithSHA1AndMGF1Padding", BouncyCastleProvider.PROVIDER_NAME);
 			rsa.init(Cipher.DECRYPT_MODE, privateKey);
