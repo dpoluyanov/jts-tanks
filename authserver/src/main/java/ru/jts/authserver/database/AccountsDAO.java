@@ -16,25 +16,26 @@
 
 package ru.jts.authserver.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.jts.authserver.model.Account;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.database.uow.ITransaction;
 import ru.jts.common.database.uow.IUnitOfWork;
-import ru.jts.common.log.Log;
 
 /**
  * @author : Camelion
  * @date : 16.08.12  19:47
  */
 public class AccountsDAO {
-	private static final String LOG_TAG = "AccountsDAO.java";
+	private static final Logger log = LoggerFactory.getLogger(AccountsDAO.class);
 	private static AccountsDAO ourInstance = new AccountsDAO();
+
+	private AccountsDAO() {
+	}
 
 	public static AccountsDAO getInstance() {
 		return ourInstance;
-	}
-
-	private AccountsDAO() {
 	}
 
 	public Account restoreByLogin(String login) {
@@ -42,7 +43,7 @@ public class AccountsDAO {
 		try (IUnitOfWork uow = UoWFactory.getInstance().createUoW()) {
 			account = uow.get(Account.class, login);
 		} catch (Exception e) {
-			Log.w(LOG_TAG, "Exception in restoreByLogin() for account '" + login + "'", e);
+			log.warn("Exception in restoreByLogin() for account '" + login + "'", e);
 		}
 		return account;
 	}
@@ -54,7 +55,7 @@ public class AccountsDAO {
 				uow.update(account);
 				transaction.commit();
 			} catch (Exception e) {
-				Log.w(LOG_TAG, "Exception in saveAccount() for account '" + account.getLogin() + "'", e);
+				log.warn("Exception in saveAccount() for account '" + account.getLogin() + "'", e);
 				transaction.rollbackIfActive();
 			}
 		}

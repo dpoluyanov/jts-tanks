@@ -44,7 +44,7 @@ dependencies {
 	compile 'dom4j:dom4j:1.6.1'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.3.0'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.3.0'
-	compile 'org.bouncycastle:bcprov-jdk16:1.46'
+	compile 'org.bouncycastle:bctsp-jdk16:1.46'
 
 	compile 'io.netty:netty-all:4.0.14.Final'
 

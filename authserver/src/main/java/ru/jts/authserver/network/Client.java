@@ -19,7 +19,7 @@ package ru.jts.authserver.network;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
-import ru.jts.authserver.network.handler.RSAPacketHandler;
+import ru.jts.authserver.network.handler.Client2AuthPacketHandler;
 import ru.jts.common.math.Rnd;
 import ru.jts.common.network.udp.IClient;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
@@ -43,7 +43,7 @@ public class Client implements IClient {
 
 	public Client(InetSocketAddress myAddress, Channel channel) {
 		this.channel = channel;
-		this.packetHandler = RSAPacketHandler.getInstance();
+		this.packetHandler = Client2AuthPacketHandler.getInstance();
 		this.myAddress = myAddress;
 	}
 

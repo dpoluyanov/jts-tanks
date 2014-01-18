@@ -16,10 +16,11 @@
 
 package ru.jts.authserver;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.jts.authserver.network.handler.UDPServerHandler;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
-import ru.jts.common.log.Log;
 import ru.jts.common.network.NetworkConfig;
 import ru.jts.common.network.udp.UDPNetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
@@ -29,7 +30,7 @@ import ru.jts.common.threading.ThreadPoolManager;
  * @date : 10.08.12  1:07
  */
 public class AuthServer {
-	private static final String LOG_TAG = "AuthServer.java";
+	private static final Logger log = LoggerFactory.getLogger(AuthServer.class);
 
 	static {
 		Config.load("config/developers.properties");
@@ -41,10 +42,10 @@ public class AuthServer {
 	public static void main(String[] args) {
 		ThreadPoolManager.getInstance().init(Config.getInt("thread_pool_manager.scheduled_thread_pool_size"),
 				Config.getInt("thread_pool_manager.executor_thread_pool_size"));
-		Log.i(LOG_TAG, "ThreadPoolManager created.");
+		log.info("ThreadPoolManager created.");
 
 		UoWFactory.getInstance();
-		Log.i(LOG_TAG, "UoWFactory loaded.");
+		log.info("UoWFactory loaded.");
 
 
 		startNetworkServers();
@@ -58,7 +59,7 @@ public class AuthServer {
 
 		networkThread.start();
 
-		Log.i(LOG_TAG, "Clients NetworkThread loaded on {}:{}", Config.getString("network.game_clients.address"),
+		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.game_clients.address"),
 				Config.getInt("network.game_clients.port"));
 	}
 }

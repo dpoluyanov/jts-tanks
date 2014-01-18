@@ -18,10 +18,11 @@ package ru.jts.authserver.network.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.clientpackets.AuthorizeByPassword;
 import ru.jts.authserver.network.crypt.RSAEngine;
-import ru.jts.common.log.Log;
 import ru.jts.common.network.udp.ClientPacket;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
 import ru.jts.common.util.ArrayUtils;
@@ -32,12 +33,12 @@ import java.nio.ByteOrder;
  * @author : Camelion
  * @date : 20.08.12  14:55
  */
-public class RSAPacketHandler implements IUDPServerPacketHandler<Client> {
-	private static final String LOG_TAG = "RSAPacketHandler.java";
+public class Client2AuthPacketHandler implements IUDPServerPacketHandler<Client> {
+	private static final Logger log = LoggerFactory.getLogger(Client2AuthPacketHandler.class);
 
-	private static RSAPacketHandler ourInstance = new RSAPacketHandler();
+	private static Client2AuthPacketHandler ourInstance = new Client2AuthPacketHandler();
 
-	public static RSAPacketHandler getInstance() {
+	public static Client2AuthPacketHandler getInstance() {
 		return ourInstance;
 	}
 
@@ -73,9 +74,9 @@ public class RSAPacketHandler implements IUDPServerPacketHandler<Client> {
 			//    packet = new AuthorizeBySession();
 			//    break;
 			default:
-				Log.w(LOG_TAG, "Unknown opcode {}", Integer.toHexString(opcode));
-				Log.w(LOG_TAG, ArrayUtils.bytesToHexString(packetBuf.copy(packetBuf.readerIndex(), packetBuf.readableBytes()).array()));
-				Log.w(LOG_TAG, new String(packetBuf.copy(packetBuf.readerIndex(), packetBuf.readableBytes()).array()));
+				log.warn("Unknown opcode {}", Integer.toHexString(opcode));
+				log.warn(ArrayUtils.bytesToHexString(packetBuf.copy(packetBuf.readerIndex(), packetBuf.readableBytes()).array()));
+				log.warn(new String(packetBuf.copy(packetBuf.readerIndex(), packetBuf.readableBytes()).array()));
 				break;
 		}
 

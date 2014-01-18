@@ -37,11 +37,6 @@ public abstract class ServerPacket<T extends IClient> {
 	}
 
 	public void write() {
-		try {
-			before();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		writeImpl();
 		makeHeader();
 	}
@@ -56,13 +51,6 @@ public abstract class ServerPacket<T extends IClient> {
 		content.clear();
 		content = tempContent;
 		System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
-	}
-
-	/**
-	 * Вызываеся перед записью данных
-	 */
-	protected void before() throws Exception {
-
 	}
 
 	protected void writeByte(int value) {

@@ -22,14 +22,12 @@ import io.netty.buffer.ByteBuf;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * @author: Camelion
  * @date: 01.11.13/23:18
  */
 public abstract class ClientPacket<T extends IClient> implements Runnable {
-	private static final Pattern bracketsPattern = Pattern.compile("(\\{[^}]*\\})");
 
 	protected ByteBuf content;
 	private T client;
@@ -66,10 +64,6 @@ public abstract class ClientPacket<T extends IClient> implements Runnable {
 		return null;
 	}
 
-	private void skipBytes(int count) {
-		content.skipBytes(count);
-	}
-
 	protected byte readByte() {
 		return content.readByte();
 	}
@@ -90,11 +84,11 @@ public abstract class ClientPacket<T extends IClient> implements Runnable {
 		return b;
 	}
 
-	public void setClient(T client) {
-		this.client = client;
-	}
-
 	public T getClient() {
 		return client;
+	}
+
+	public void setClient(T client) {
+		this.client = client;
 	}
 }

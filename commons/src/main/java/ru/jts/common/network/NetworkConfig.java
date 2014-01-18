@@ -23,12 +23,10 @@ import java.net.InetSocketAddress;
  * @date : 13.08.12  13:44
  */
 public class NetworkConfig {
-	private final int port;
 	private final int threadCount;
 	private final InetSocketAddress socketAddress;
 
 	public NetworkConfig(String address, int port, int threadCount) {
-		this.port = port;
 		this.threadCount = threadCount;
 
 		if (address.equals("*"))
@@ -39,9 +37,5 @@ public class NetworkConfig {
 
 	public InetSocketAddress getSocketAddress() {
 		return socketAddress;
-	}
-
-	public int getThreadCount() {
-		return threadCount;
 	}
 }

@@ -16,8 +16,8 @@
 
 package ru.jts.common.configuration;
 
-import ru.jts.common.GlobalConstans;
-import ru.jts.common.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,12 +32,12 @@ import java.util.Properties;
  */
 public class Config {
 	private static final Map<String, String> propertiesMap = new HashMap<>();
-	private static final String LOG_TAG = "Config.java";
+	private static final Logger log = LoggerFactory.getLogger(Config.class);
 
 	public static void load(String filePath) {
 		File file = new File(filePath);
 		if (!file.exists()) {
-			Log.w(LOG_TAG, "File {} don't exist! ", filePath);
+			log.warn("File {} don't exist! ", filePath);
 			return;
 		}
 
@@ -49,7 +49,6 @@ public class Config {
 
 	private static void loadFromDirectory(File dir) {
 		if (dir.listFiles() != null) {
-			//noinspection ConstantConditions
 			for (File file : dir.listFiles()) {
 				if (file.isDirectory())
 					loadFromDirectory(file);
@@ -64,18 +63,16 @@ public class Config {
 		try {
 			properties.load(new FileReader(file));
 		} catch (IOException e) {
-			Log.w(LOG_TAG, "Exception in loadFile()", e);
+			log.warn("Exception in loadFile()", e);
 			return;
 		}
 		for (String property : properties.stringPropertyNames()) {
 			//noinspection PointlessBooleanExpression,ConstantConditions
-			if (GlobalConstans.DEBUG && propertiesMap.containsKey(property))
-				Log.d(LOG_TAG, " duplicate property {} ", property);
+			if (propertiesMap.containsKey(property))
+				log.debug(" duplicate property {} ", property);
 			propertiesMap.put(property, properties.getProperty(property));
 		}
-
-		if (GlobalConstans.DEBUG)
-			Log.d(LOG_TAG, "loaded file {}", file.getName());
+		log.debug("loaded file {}", file.getName());
 	}
 
 	public static String getString(String key) {

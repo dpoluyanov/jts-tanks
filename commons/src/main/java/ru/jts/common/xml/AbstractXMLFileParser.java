@@ -18,7 +18,8 @@ package ru.jts.common.xml;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import ru.jts.common.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.jts.common.parser.AbstractHolder;
 
 import java.io.File;
@@ -30,7 +31,7 @@ import java.io.InputStream;
  * @date : 18.08.12  1:12
  */
 public abstract class AbstractXMLFileParser<H extends AbstractHolder> extends AbstractXMLParser<H> {
-	private static final String LOG_TAG = "AbstractXMLFileParser.java";
+	private static final Logger log = LoggerFactory.getLogger(AbstractXMLFileParser.class);
 
 	protected AbstractXMLFileParser(H holder) {
 		super(holder);
@@ -40,13 +41,13 @@ public abstract class AbstractXMLFileParser<H extends AbstractHolder> extends Ab
 	protected final void parse() {
 		File xmlFile = new File(getXMLFileName());
 		if (!xmlFile.exists()) {
-			Log.e(LOG_TAG, "XML file {} not exists!", getXMLFileName());
+			log.error("XML file {} not exists!", getXMLFileName());
 			return;
 		}
 
 		File dtdFile = new File(getDTDFileName());
 		if (!dtdFile.exists()) {
-			Log.e(LOG_TAG, "DTD file {} not exists!", getXMLFileName());
+			log.error("DTD file {} not exists!", getXMLFileName());
 			return;
 		}
 
@@ -54,7 +55,7 @@ public abstract class AbstractXMLFileParser<H extends AbstractHolder> extends Ab
 		try {
 			parseFile(new FileInputStream(xmlFile), getXMLFileName());
 		} catch (Exception e) {
-			Log.e(LOG_TAG, "Exception while parse file " + getXMLFileName(), e);
+			log.error("Exception while parse file " + getXMLFileName(), e);
 		}
 	}
 

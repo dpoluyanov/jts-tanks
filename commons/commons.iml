@@ -39,7 +39,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: junit-4.11" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javassist-3.18.1-GA" level="project" />
     <orderEntry type="library" exported="" name="Gradle: antlr-2.7.7" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: netty-all-4.0.14.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: hibernate-core-4.3.0.Final" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.inject-1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: bcprov-jdk16-1.46" level="project" />
@@ -48,6 +47,9 @@
     <orderEntry type="library" exported="" name="Gradle: querydsl-core-3.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jackson-core-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: asm-3.3.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: bctsp-jdk16-1.46" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: bcmail-jdk16-1.46" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: netty-all-4.0.14.Final" level="project" />
   </component>
 </module>
 

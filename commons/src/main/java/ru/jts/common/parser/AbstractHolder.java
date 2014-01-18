@@ -16,7 +16,8 @@
 
 package ru.jts.common.parser;
 
-import ru.jts.common.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @date : 18.08.12  1:12
  */
 public abstract class AbstractHolder {
+	private static final Logger log = LoggerFactory.getLogger(AbstractHolder.class);
 	private long parseStartTime, parseEndTime;
 
 	/**
@@ -42,7 +44,7 @@ public abstract class AbstractHolder {
 	}
 
 	public void logAfterLoading() {
-		Log.i(String.format("%s: Loaded %d elements (in %.3f sec)", getClass().getSimpleName(), size(), (float) TimeUnit.NANOSECONDS.toMillis(parseEndTime - parseStartTime) / 1000D));
+		log.info(String.format("%s: Loaded %d elements (in %.3f sec)", getClass().getSimpleName(), size(), (float) TimeUnit.NANOSECONDS.toMillis(parseEndTime - parseStartTime) / 1000D));
 	}
 
 	public abstract int size();
