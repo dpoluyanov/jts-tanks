@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -21,36 +21,36 @@ package ru.jts.common.parser;
  * @date : 18.08.12  1:12
  */
 public abstract class AbstractParser<H extends AbstractHolder> {
-    private final H holder;
-    private String currentFile;
+	private final H holder;
+	private String currentFile;
 
-    protected AbstractParser(H holder) {
-        this.holder = holder;
-    }
+	protected AbstractParser(H holder) {
+		this.holder = holder;
+	}
 
-    protected abstract void parse() throws Exception;
+	protected abstract void parse() throws Exception;
 
-    protected H getHolder() {
-        return holder;
-    }
+	protected H getHolder() {
+		return holder;
+	}
 
-    public void load() throws Exception {
-        getHolder().beforeParsing();
-        parse();
-        getHolder().afterParsing();
-        getHolder().logAfterLoading();
-        afterParsing();
-    }
+	public void load() throws Exception {
+		getHolder().beforeParsing();
+		parse();
+		getHolder().afterParsing();
+		getHolder().logAfterLoading();
+		afterParsing();
+	}
 
-    protected void afterParsing() {
+	protected void afterParsing() {
 
-    }
+	}
 
-    public String getCurrentFile() {
-        return currentFile;
-    }
+	public String getCurrentFile() {
+		return currentFile;
+	}
 
-    public void setCurrentFile(String currentFile) {
-        this.currentFile = currentFile;
-    }
+	public void setCurrentFile(String currentFile) {
+		this.currentFile = currentFile;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -21,5 +21,5 @@ package ru.jts.common;
  * @date : 13.08.12  21:40
  */
 public class GlobalConstans {
-    public static final boolean DEBUG = true;
+	public static final boolean DEBUG = true;
 }

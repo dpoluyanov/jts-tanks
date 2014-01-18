@@ -1,5 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="">
-    <module2copyright />
+  <settings default="JTS_APACHE2">
+    <module2copyright>
+      <element module="ALL_PROJECT" copyright="JTS_APACHE2" />
+    </module2copyright>
   </settings>
 </component>

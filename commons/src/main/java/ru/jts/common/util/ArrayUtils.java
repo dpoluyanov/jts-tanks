@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -23,17 +23,17 @@ import java.util.Formatter;
  * @date : 26.08.12  14:26
  */
 public final class ArrayUtils {
-    public static final int[] EMPTY_INT_ARRAY = new int[0];
-    public static final String[] EMPTY_STRING_ARRAY = {};
+	public static final int[] EMPTY_INT_ARRAY = new int[0];
+	public static final String[] EMPTY_STRING_ARRAY = {};
 
-    public static String bytesToHexString(byte[] bytes) {
-        StringBuilder sb = new StringBuilder(bytes.length * 2);
+	public static String bytesToHexString(byte[] bytes) {
+		StringBuilder sb = new StringBuilder(bytes.length * 2);
 
-        Formatter formatter = new Formatter(sb);
-        for (byte b : bytes) {
-            formatter.format("%02x ", b);
-        }
+		Formatter formatter = new Formatter(sb);
+		for (byte b : bytes) {
+			formatter.format("%02x ", b);
+		}
 
-        return sb.toString().substring(0, sb.length() - 1).toUpperCase();
-    }
+		return sb.toString().substring(0, sb.length() - 1).toUpperCase();
+	}
 }

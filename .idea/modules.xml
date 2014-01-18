@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JTS-Tanks.iml" filepath="$PROJECT_DIR$/JTS-Tanks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authserver/authserver.iml" filepath="$PROJECT_DIR$/authserver/authserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/commons/commons.iml" filepath="$PROJECT_DIR$/commons/commons.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gameserver/gameserver.iml" filepath="$PROJECT_DIR$/gameserver/gameserver.iml" />
     </modules>
   </component>
 </project>

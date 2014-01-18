@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ALL_PROJECT" pattern="file[authserver]:*/||file[commons]:*/||file[gameserver]:*/||file[JTS-Tanks]:*/" />
+</component>

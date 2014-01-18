@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -30,43 +30,43 @@ import java.io.InputStream;
  * @date : 18.08.12  1:12
  */
 public abstract class AbstractXMLFileParser<H extends AbstractHolder> extends AbstractXMLParser<H> {
-    private static final String LOG_TAG = "AbstractXMLFileParser.java";
+	private static final String LOG_TAG = "AbstractXMLFileParser.java";
 
-    protected AbstractXMLFileParser(H holder) {
-        super(holder);
-    }
+	protected AbstractXMLFileParser(H holder) {
+		super(holder);
+	}
 
-    @Override
-    protected final void parse() {
-        File xmlFile = new File(getXMLFileName());
-        if (!xmlFile.exists()) {
-            Log.e(LOG_TAG, "XML file {} not exists!", getXMLFileName());
-            return;
-        }
+	@Override
+	protected final void parse() {
+		File xmlFile = new File(getXMLFileName());
+		if (!xmlFile.exists()) {
+			Log.e(LOG_TAG, "XML file {} not exists!", getXMLFileName());
+			return;
+		}
 
-        File dtdFile = new File(getDTDFileName());
-        if (!dtdFile.exists()) {
-            Log.e(LOG_TAG, "DTD file {} not exists!", getXMLFileName());
-            return;
-        }
+		File dtdFile = new File(getDTDFileName());
+		if (!dtdFile.exists()) {
+			Log.e(LOG_TAG, "DTD file {} not exists!", getXMLFileName());
+			return;
+		}
 
-        reader.setEntityResolver(new DTDEntityResolver(getDTDFileName()));
-        try {
-            parseFile(new FileInputStream(xmlFile), getXMLFileName());
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Exception while parse file " + getXMLFileName(), e);
-        }
-    }
+		reader.setEntityResolver(new DTDEntityResolver(getDTDFileName()));
+		try {
+			parseFile(new FileInputStream(xmlFile), getXMLFileName());
+		} catch (Exception e) {
+			Log.e(LOG_TAG, "Exception while parse file " + getXMLFileName(), e);
+		}
+	}
 
-    @Override
-    protected void parseFile(InputStream f, String fileName) throws DocumentException {
-        setCurrentFile(fileName);
+	@Override
+	protected void parseFile(InputStream f, String fileName) throws DocumentException {
+		setCurrentFile(fileName);
 
-        Document document = reader.read(f);
-        readData(document.getRootElement());
-    }
+		Document document = reader.read(f);
+		readData(document.getRootElement());
+	}
 
-    protected abstract String getXMLFileName();
+	protected abstract String getXMLFileName();
 
-    protected abstract String getDTDFileName();
+	protected abstract String getDTDFileName();
 }

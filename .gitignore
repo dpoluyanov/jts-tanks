@@ -1,16 +1,19 @@
-/commons/target
-
-/server/target
-/server/dist/log
-
-/server/dist/config/*.properties
 /.gradle
 /commons/build
-/server/build
+/authserver/build
+/gameserver/build
 
 /commons/src/generated
+/authserver/src/generated
+/gameserver/src/generated
 
-/server/src/generated
 /classes
 
 /.idea/workspace.xml
+
+/authserver/dist/log/*.log
+/authserver/dist/config/*.properties
+
+/gameserver/dist/log/*.log
+/gameserver/dist/config/*.properties
+

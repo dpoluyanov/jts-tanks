@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014 jts
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ru.jts.common.network.udp;
 
 import io.netty.buffer.ByteBuf;
@@ -12,84 +28,84 @@ import java.nio.ByteOrder;
  */
 public abstract class ServerPacket<T extends IClient> {
 
-    private T client;
+	private T client;
 
-    protected ByteBuf content;
+	protected ByteBuf content;
 
-    public ServerPacket() {
-        content = Unpooled.buffer().order(ByteOrder.LITTLE_ENDIAN);
-    }
+	public ServerPacket() {
+		content = Unpooled.buffer().order(ByteOrder.LITTLE_ENDIAN);
+	}
 
-    public void write() {
-        try {
-            before();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        writeImpl();
-        makeHeader();
-    }
+	public void write() {
+		try {
+			before();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		writeImpl();
+		makeHeader();
+	}
 
-    private void makeHeader() {
-        ByteBuf tempContent = Unpooled.buffer().capacity(content.readableBytes() + 7).order(ByteOrder.LITTLE_ENDIAN);
-        tempContent.writeShort(0x00);
-        tempContent.writeByte(0xFF);
-        tempContent.writeInt(content.readableBytes());
-        tempContent.writeBytes(content);
+	private void makeHeader() {
+		ByteBuf tempContent = Unpooled.buffer().capacity(content.readableBytes() + 7).order(ByteOrder.LITTLE_ENDIAN);
+		tempContent.writeShort(0x00);
+		tempContent.writeByte(0xFF);
+		tempContent.writeInt(content.readableBytes());
+		tempContent.writeBytes(content);
 
-        content.clear();
-        content = tempContent;
-        System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
-    }
+		content.clear();
+		content = tempContent;
+		System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
+	}
 
-    /**
-     * Вызываеся перед записью данных
-     */
-    protected void before() throws Exception {
+	/**
+	 * Вызываеся перед записью данных
+	 */
+	protected void before() throws Exception {
 
-    }
+	}
 
-    protected void writeByte(int value) {
-        content.writeByte(value);
-    }
+	protected void writeByte(int value) {
+		content.writeByte(value);
+	}
 
-    protected void writeShort(int value) {
-        content.writeShort(value);
-    }
+	protected void writeShort(int value) {
+		content.writeShort(value);
+	}
 
-    protected void writeInt(int value) {
-        content.writeInt(value);
-    }
+	protected void writeInt(int value) {
+		content.writeInt(value);
+	}
 
-    protected void writeBytes(byte... values) {
-        content.writeBytes(values);
-    }
+	protected void writeBytes(byte... values) {
+		content.writeBytes(values);
+	}
 
-    protected void writeBytes(int... values) {
-        for (int b : values)
-            content.writeByte(b);
-    }
+	protected void writeBytes(int... values) {
+		for (int b : values)
+			content.writeByte(b);
+	}
 
-    protected void writeBytes(ByteBuf buf) {
-        content.writeBytes(buf);
-    }
+	protected void writeBytes(ByteBuf buf) {
+		content.writeBytes(buf);
+	}
 
-    protected void writeString(String str) {
-        content.writeByte(str.length());
-        content.writeBytes(str.getBytes());
-    }
+	protected void writeString(String str) {
+		content.writeByte(str.length());
+		content.writeBytes(str.getBytes());
+	}
 
-    protected abstract void writeImpl();
+	protected abstract void writeImpl();
 
-    public void setClient(T client) {
-        this.client = client;
-    }
+	public void setClient(T client) {
+		this.client = client;
+	}
 
-    protected T getClient() {
-        return client;
-    }
+	protected T getClient() {
+		return client;
+	}
 
-    public ByteBuf getContent() {
-        return content;
-    }
+	public ByteBuf getContent() {
+		return content;
+	}
 }

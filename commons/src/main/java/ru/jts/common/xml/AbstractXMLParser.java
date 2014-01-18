@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -28,16 +28,16 @@ import java.io.InputStream;
  * @date : 18.08.12  1:21
  */
 /* package */ abstract class AbstractXMLParser<H extends AbstractHolder> extends AbstractParser<H> {
-    /* package */ final SAXReader reader;
+	/* package */ final SAXReader reader;
 
 
-    protected AbstractXMLParser(H holder) {
-        super(holder);
-        reader = new SAXReader();
-        reader.setValidation(true);
-    }
+	protected AbstractXMLParser(H holder) {
+		super(holder);
+		reader = new SAXReader();
+		reader.setValidation(true);
+	}
 
-    protected abstract void parseFile(InputStream f, String fileName) throws Exception;
+	protected abstract void parseFile(InputStream f, String fileName) throws Exception;
 
-    protected abstract void readData(Element rootElement);
+	protected abstract void readData(Element rootElement);
 }

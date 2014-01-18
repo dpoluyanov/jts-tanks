@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ import java.io.IOException;
  */
 /* package */ class DTDEntityResolver implements EntityResolver {
 
-    private final String file;
+	private final String file;
 
-    /* package */ DTDEntityResolver(String file) {
-        this.file = file;
-    }
+	/* package */ DTDEntityResolver(String file) {
+		this.file = file;
+	}
 
-    @Override
-    public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-        return new InputSource(file);
-    }
+	@Override
+	public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+		return new InputSource(file);
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -21,29 +21,29 @@ package ru.jts.common.math;
  * @date : 16.11.11   9:54
  */
 public class Rnd {
-    private static final MTRandom random = new MTRandom(false);
+	private static final MTRandom random = new MTRandom(false);
 
-    /**
-     * Возвращает случайное число от 0(включительно) до n(исключая)
-     *
-     * @param n - верхний предел
-     * @return случайное число от 0 до n-1
-     */
-    public static int get(int n) {
-        return (int) Math.floor(random.nextDouble() * n);
-    }
+	/**
+	 * Возвращает случайное число от 0(включительно) до n(исключая)
+	 *
+	 * @param n - верхний предел
+	 * @return случайное число от 0 до n-1
+	 */
+	public static int get(int n) {
+		return (int) Math.floor(random.nextDouble() * n);
+	}
 
-    public static int nextInt() {
-        return random.nextInt();
-    }
+	public static int nextInt() {
+		return random.nextInt();
+	}
 
-    public static byte nextDigest() {
-        return (byte) get(9);
-    }
+	public static byte nextDigest() {
+		return (byte) get(9);
+	}
 
-    public static byte[] nextBytes(int count) {
-        byte[] data = new byte[count];
-        random.nextBytes(data);
-        return data;
-    }
+	public static byte[] nextBytes(int count) {
+		byte[] data = new byte[count];
+		random.nextBytes(data);
+		return data;
+	}
 }

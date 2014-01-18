@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -23,25 +23,25 @@ import java.net.InetSocketAddress;
  * @date : 13.08.12  13:44
  */
 public class NetworkConfig {
-    private final int port;
-    private final int threadCount;
-    private final InetSocketAddress socketAddress;
+	private final int port;
+	private final int threadCount;
+	private final InetSocketAddress socketAddress;
 
-    public NetworkConfig(String address, int port, int threadCount) {
-        this.port = port;
-        this.threadCount = threadCount;
+	public NetworkConfig(String address, int port, int threadCount) {
+		this.port = port;
+		this.threadCount = threadCount;
 
-        if (address.equals("*"))
-            socketAddress = new InetSocketAddress(port);
-        else
-            socketAddress = new InetSocketAddress(address, port);
-    }
+		if (address.equals("*"))
+			socketAddress = new InetSocketAddress(port);
+		else
+			socketAddress = new InetSocketAddress(address, port);
+	}
 
-    public InetSocketAddress getSocketAddress() {
-        return socketAddress;
-    }
+	public InetSocketAddress getSocketAddress() {
+		return socketAddress;
+	}
 
-    public int getThreadCount() {
-        return threadCount;
-    }
+	public int getThreadCount() {
+		return threadCount;
+	}
 }

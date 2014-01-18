@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -31,63 +31,63 @@ import java.util.Properties;
  * @date : 10.08.12  10:28
  */
 public class Config {
-    private static final Map<String, String> propertiesMap = new HashMap<>();
-    private static final String LOG_TAG = "Config.java";
+	private static final Map<String, String> propertiesMap = new HashMap<>();
+	private static final String LOG_TAG = "Config.java";
 
-    public static void load(String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            Log.w(LOG_TAG, "File {} don't exist! ", filePath);
-            return;
-        }
+	public static void load(String filePath) {
+		File file = new File(filePath);
+		if (!file.exists()) {
+			Log.w(LOG_TAG, "File {} don't exist! ", filePath);
+			return;
+		}
 
-        if (file.isDirectory())
-            loadFromDirectory(file);
-        else
-            loadFile(file);
-    }
+		if (file.isDirectory())
+			loadFromDirectory(file);
+		else
+			loadFile(file);
+	}
 
-    private static void loadFromDirectory(File dir) {
-        if (dir.listFiles() != null) {
-            //noinspection ConstantConditions
-            for (File file : dir.listFiles()) {
-                if (file.isDirectory())
-                    loadFromDirectory(file);
-                else
-                    loadFile(file);
-            }
-        }
-    }
+	private static void loadFromDirectory(File dir) {
+		if (dir.listFiles() != null) {
+			//noinspection ConstantConditions
+			for (File file : dir.listFiles()) {
+				if (file.isDirectory())
+					loadFromDirectory(file);
+				else
+					loadFile(file);
+			}
+		}
+	}
 
-    private static void loadFile(File file) {
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileReader(file));
-        } catch (IOException e) {
-            Log.w(LOG_TAG, "Exception in loadFile()", e);
-            return;
-        }
-        for (String property : properties.stringPropertyNames()) {
-            //noinspection PointlessBooleanExpression,ConstantConditions
-            if (GlobalConstans.DEBUG && propertiesMap.containsKey(property))
-                Log.d(LOG_TAG, " duplicate property {} ", property);
-            propertiesMap.put(property, properties.getProperty(property));
-        }
+	private static void loadFile(File file) {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileReader(file));
+		} catch (IOException e) {
+			Log.w(LOG_TAG, "Exception in loadFile()", e);
+			return;
+		}
+		for (String property : properties.stringPropertyNames()) {
+			//noinspection PointlessBooleanExpression,ConstantConditions
+			if (GlobalConstans.DEBUG && propertiesMap.containsKey(property))
+				Log.d(LOG_TAG, " duplicate property {} ", property);
+			propertiesMap.put(property, properties.getProperty(property));
+		}
 
-        if (GlobalConstans.DEBUG)
-            Log.d(LOG_TAG, "loaded file {}", file.getName());
-    }
+		if (GlobalConstans.DEBUG)
+			Log.d(LOG_TAG, "loaded file {}", file.getName());
+	}
 
-    public static String getString(String key) {
-        String ret = propertiesMap.get(key);
-        return ret;
-    }
+	public static String getString(String key) {
+		String ret = propertiesMap.get(key);
+		return ret;
+	}
 
-    public static int getInt(String key) {
-        return Integer.parseInt(getString(key));
-    }
+	public static int getInt(String key) {
+		return Integer.parseInt(getString(key));
+	}
 
-    public static boolean getBool(String key) {
-        return Boolean.parseBoolean(getString(key));
-    }
+	public static boolean getBool(String key) {
+		return Boolean.parseBoolean(getString(key));
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 jts
+ * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -25,26 +25,26 @@ import java.util.concurrent.TimeUnit;
  * @date : 18.08.12  1:12
  */
 public abstract class AbstractHolder {
-    private long parseStartTime, parseEndTime;
+	private long parseStartTime, parseEndTime;
 
-    /**
-     * Вызывается непосредственно перед загрузкой
-     */
-    public void beforeParsing() {
-        parseStartTime = System.nanoTime();
-    }
+	/**
+	 * Вызывается непосредственно перед загрузкой
+	 */
+	public void beforeParsing() {
+		parseStartTime = System.nanoTime();
+	}
 
-    /**
-     * Вызывается после того, как были загружены все элементы.
-     */
-    public void afterParsing() {
-        parseEndTime = System.nanoTime();
-    }
+	/**
+	 * Вызывается после того, как были загружены все элементы.
+	 */
+	public void afterParsing() {
+		parseEndTime = System.nanoTime();
+	}
 
-    public void logAfterLoading() {
-        Log.i(String.format("%s: Loaded %d elements (in %.3f sec)", getClass().getSimpleName(), size(), (float) TimeUnit.NANOSECONDS.toMillis(parseEndTime - parseStartTime) / 1000D));
-    }
+	public void logAfterLoading() {
+		Log.i(String.format("%s: Loaded %d elements (in %.3f sec)", getClass().getSimpleName(), size(), (float) TimeUnit.NANOSECONDS.toMillis(parseEndTime - parseStartTime) / 1000D));
+	}
 
-    public abstract int size();
+	public abstract int size();
 }
 
