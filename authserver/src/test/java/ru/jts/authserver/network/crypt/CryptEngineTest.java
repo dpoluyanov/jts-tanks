@@ -27,7 +27,7 @@ import static ru.jts.common.util.ArrayUtils.bytesToHexString;
  * @author: Camelion
  * @date: 12.11.13/19:56
  */
-public class CryptEngineTest {
+public class CryptEngineTest extends Assert {
 	private byte[] in = new byte[]{
 			(byte) 0x4d, (byte) 0x3f, (byte) 0x36, (byte) 0x81, (byte) 0xa1, (byte) 0xcc, (byte) 0x36, (byte) 0x74, (byte) 0x00, (byte) 0xdd, (byte) 0xee, (byte) 0xbc, (byte) 0xac, (byte) 0x1f, (byte) 0xd7, (byte) 0x39, (byte) 0x01, (byte) 0x33, (byte) 0xc6, (byte) 0xbb, (byte) 0x4b, (byte) 0xaf, (byte) 0xb9, (byte) 0x6b
 	};
@@ -51,6 +51,6 @@ public class CryptEngineTest {
 		System.out.println(bytesToHexString(result));
 		System.out.println(new String(result));
 
-		Assert.assertArrayEquals(result, out);
+		assertArrayEquals(result, out);
 	}
 }
