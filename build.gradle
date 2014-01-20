@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 
-defaultTasks 'clean', 'test', 'jar'
+apply plugin: 'distribution'
+
+distributions {
+	main {
+		baseName = 'JTS-Tanks'
+		contents {
+			from 'authserver/build/distributions'
+			from 'gameserver/build/distributions'
+		}
+	}
+}
+
+distZip.dependsOn(":authserver:distZip")
+distZip.dependsOn(":gameserver:distZip")
 
 subprojects {
 	apply plugin: 'java'

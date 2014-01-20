@@ -36,4 +36,14 @@ public final class ArrayUtils {
 
 		return sb.toString().substring(0, sb.length() - 1).toUpperCase();
 	}
+
+	public static boolean arrayEquals(byte[] data, byte[] expected) {
+		if (data.length != expected.length)
+			return false;
+		for (int i = 0; i < data.length; i++) {
+			if (data[i] != expected[i])
+				return false;
+		}
+		return true;
+	}
 }

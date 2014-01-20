@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'idea'
+apply plugin: 'distribution'
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -80,6 +81,34 @@ compileGeneratedJava {
 	dependsOn generateQueryDSL
 	options.warnings = false
 	classpath += sourceSets.main.runtimeClasspath
+}
+
+task copyDist(type: Copy) {
+	destinationDir = file("$buildDir/prepared-dist")
+	into('config/default') {
+		from 'dist/config/default/'
+	}
+	into('config') {
+		from 'dist/config/default/'
+	}
+	from ('dist') { include 'key.pem', 'start.bat'}
+	into('lib') {
+		from configurations.runtime
+		from jar.outputs.files
+	}
+}
+
+copyDist.dependsOn(jar)
+
+distZip.dependsOn(copyDist)
+
+distributions {
+	main {
+		baseName = 'auth-server'
+		contents {
+			from copyDist
+		}
+	}
 }
 
 clean {
