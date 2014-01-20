@@ -44,7 +44,8 @@ public class AuthServer {
 				Config.getInt("thread_pool_manager.executor_thread_pool_size"));
 		log.info("ThreadPoolManager created.");
 
-		UoWFactory.getInstance();
+		UoWFactory.getInstance().init("PersistenceUnit");
+
 		log.info("UoWFactory loaded.");
 
 

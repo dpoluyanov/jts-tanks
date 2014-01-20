@@ -32,14 +32,19 @@ public class UoWFactory {
 	}
 
 	private UoWFactory() {
-		init();
 	}
 
-	private void init() {
-		entityManagerFactory = Persistence.createEntityManagerFactory("PersistenceUnit");
+	public void init(String persistenceUnitName) {
+		if (isInitialized())
+			throw new ExceptionInInitializerError("Already initialized");
+		entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
 	}
 
 	public IUnitOfWork createUoW() {
 		return new JPAUnitOfWork(entityManagerFactory.createEntityManager());
+	}
+
+	public boolean isInitialized() {
+		return entityManagerFactory != null;
 	}
 }

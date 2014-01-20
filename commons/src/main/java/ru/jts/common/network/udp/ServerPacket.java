@@ -18,7 +18,6 @@ package ru.jts.common.network.udp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import ru.jts.common.util.ArrayUtils;
 
 import java.nio.ByteOrder;
 
@@ -26,7 +25,7 @@ import java.nio.ByteOrder;
  * @author: Camelion
  * @date: 29.11.13/4:36
  */
-public abstract class ServerPacket<T extends IClient> {
+/* package */ abstract class ServerPacket<T extends IClient> {
 
 	private T client;
 
@@ -38,19 +37,6 @@ public abstract class ServerPacket<T extends IClient> {
 
 	public void write() {
 		writeImpl();
-		makeHeader();
-	}
-
-	private void makeHeader() {
-		ByteBuf tempContent = Unpooled.buffer().capacity(content.readableBytes() + 7).order(ByteOrder.LITTLE_ENDIAN);
-		tempContent.writeShort(0x00);
-		tempContent.writeByte(0xFF);
-		tempContent.writeInt(content.readableBytes());
-		tempContent.writeBytes(content);
-
-		content.clear();
-		content = tempContent;
-		System.out.println(ArrayUtils.bytesToHexString(content.copy().array()));
 	}
 
 	protected void writeByte(int value) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3228138441">
+  <component name="DataSourceManagerImpl" format="xml" hash="308869615">
     <data-source source="LOCAL" name="PersistenceUnit" uuid="64f2d8ba-1fad-4f68-9cc2-363e21b7c066">
       <driver-ref>mysql</driver-ref>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
@@ -10,6 +10,17 @@
       <libraries>
         <library>
           <url>file://C:\Users\Дмитрий\.gradle\caches\modules-2\files-2.1\mysql\mysql-connector-java\5.1.27\2e4fbf71af3fa214951aa32bb6b39076e4e01b6f\mysql-connector-java-5.1.27.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="PersistenceUnitForTest" uuid="e5b02d7a-755c-45f1-bcf8-accfa216f567">
+      <driver-ref>hsqldb.remote</driver-ref>
+      <jdbc-driver>org.hsqldb.jdbcDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:mem:salvation</jdbc-url>
+      <user-name>sa</user-name>
+      <libraries>
+        <library>
+          <url>file://C:\Users\Дмитрий\.gradle\caches\modules-2\files-2.1\org.hsqldb\hsqldb\2.3.1\bd7153caa30958e1c64a3dd38b93e5a7442d9a0e\hsqldb-2.3.1.jar</url>
         </library>
       </libraries>
     </data-source>

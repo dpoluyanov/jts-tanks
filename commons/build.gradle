@@ -36,7 +36,8 @@ configurations {
 }
 
 dependencies {
-	testCompile 'junit:junit:+'
+	testRuntime 'org.hsqldb:hsqldb:+'
+	compile 'junit:junit:+'
 
 	compile 'org.slf4j:slf4j-api:+'
 	compile 'org.slf4j:slf4j-log4j12:+'
@@ -73,6 +74,10 @@ task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates
 	destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
 }
 
+processResources.doFirst({
+	delete sourceSets.main.output.resourcesDir
+})
+
 compileJava {
 	dependsOn generateQueryDSL
 	source generateQueryDSL.destinationDir
@@ -84,11 +89,16 @@ compileGeneratedJava {
 	classpath += sourceSets.main.runtimeClasspath
 }
 
+processTestResources.doLast({
+	copy {
+		from sourceSets.main.output.classesDir
+		into sourceSets.main.output.resourcesDir
+	}
+})
+
 clean {
 	delete sourceSets.generated.java.srcDirs
 }
-
-
 
 idea {
 	module {

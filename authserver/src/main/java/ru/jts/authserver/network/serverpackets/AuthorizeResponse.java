@@ -18,15 +18,14 @@ package ru.jts.authserver.network.serverpackets;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import ru.jts.authserver.network.Client;
-import ru.jts.common.network.udp.ServerPacket;
+import ru.jts.common.network.udp.Auth2ClientServerPacket;
 import ru.jts.common.util.ArrayUtils;
 
 /**
  * @author: Camelion
  * @date: 20.12.13/1:36
  */
-public class AuthorizeResponse extends ServerPacket<Client> {
+public class AuthorizeResponse extends Auth2ClientServerPacket {
 	public static final byte LOGIN_OK = 0x01;
 	public static final byte LOGIN_REJECTED_INVALID_PASSWORD = 0x43;
 

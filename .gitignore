@@ -16,3 +16,6 @@
 
 /gameserver/dist/log/*.log
 /gameserver/dist/config/*.properties
+/commons/log
+
+/log

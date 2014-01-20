@@ -1,4 +1,4 @@
-/*
+package ru.jts.authserver.network.crypt;/*
  * Copyright 2014 jts
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package ru.jts.authserver.tests.crypt;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import ru.jts.authserver.network.crypt.CryptEngine;
 
 import java.security.Security;
 

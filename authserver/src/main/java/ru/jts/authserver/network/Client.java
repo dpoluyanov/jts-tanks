@@ -21,9 +21,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
 import ru.jts.authserver.network.handler.Client2AuthPacketHandler;
 import ru.jts.common.math.Rnd;
+import ru.jts.common.network.udp.Auth2ClientServerPacket;
 import ru.jts.common.network.udp.IClient;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
-import ru.jts.common.network.udp.ServerPacket;
 
 import java.net.InetSocketAddress;
 
@@ -51,7 +51,7 @@ public class Client implements IClient {
 		return packetHandler;
 	}
 
-	public void sendPacket(ServerPacket<Client> packet) {
+	public void sendPacket(Auth2ClientServerPacket packet) {
 		packet.setClient(this);
 		packet.write();
 
@@ -67,10 +67,6 @@ public class Client implements IClient {
 
 	public byte[] getBlowFishKey() {
 		return blowFishKey;
-	}
-
-	public InetSocketAddress getServerAddress() {
-		return (InetSocketAddress) channel.localAddress();
 	}
 
 	public int getRandomKey() {

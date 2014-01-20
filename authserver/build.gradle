@@ -38,6 +38,7 @@ configurations {
 
 dependencies {
 	testCompile 'junit:junit:+'
+	testRuntime 'org.hsqldb:hsqldb:+'
 
 	compile project(":commons")
 

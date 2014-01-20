@@ -20,6 +20,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import ru.jts.authserver.database.AccountsDAO;
+import ru.jts.authserver.model.Account;
 import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.crypt.CryptEngine;
 import ru.jts.authserver.network.serverpackets.AuthorizeResponse;
@@ -35,8 +37,11 @@ import java.util.Map;
  * @date: 02.11.13/0:43
  */
 public class AuthorizeByPassword extends ClientPacket<Client> {
+	private static final String JSON_LOGIN = "login";
+
 	private final short sessionId;
 	private byte[] blowFishKey;
+	private Map<String, String> jsonMap;
 
 	public AuthorizeByPassword(short sessionId) {
 		this.sessionId = sessionId;
@@ -46,18 +51,20 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
 	public void readImpl() {
 		// JSON Message
 		//// session = md5Hex of Client HWID
-		Map<String, String> jsonMap = readJson();
+		jsonMap = readJson();
 		byte passLength = readByte();
 		String pass = readString(passLength); // plain pass
 		byte blowFishLength = readByte();
 		blowFishKey = readBytes(blowFishLength);
 		byte[] unk = readBytes(16); // unknown
-		short unk2 = readShort(); // неизвестно, изменяется при каждом новом подключении, похоже на номер порта
+		short unk2 = readShort(); // неизвестно, изменяется при каждом новом подключении
 		readShort();
 	}
 
 	@Override
 	public void runImpl() {
+		Account account = AccountsDAO.getInstance().restoreByLogin(jsonMap.get(JSON_LOGIN));
+
 		getClient().setBlowFishKey(blowFishKey);
 		getClient().setRandomKey(Rnd.nextInt());
 
