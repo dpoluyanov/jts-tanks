@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.clientpackets.AuthorizeByPassword;
 import ru.jts.authserver.network.crypt.RSAEngine;
-import ru.jts.common.network.udp.ClientPacket;
+import ru.jts.common.network.ClientPacket;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
 import ru.jts.common.util.ArrayUtils;
 

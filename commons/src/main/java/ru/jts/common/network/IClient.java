@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 /**
  * @author: Camelion

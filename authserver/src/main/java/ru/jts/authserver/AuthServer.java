@@ -48,13 +48,12 @@ public class AuthServer {
 
 		log.info("UoWFactory loaded.");
 
-
 		startNetworkServers();
 	}
 
 	public static void startNetworkServers() {
 		NetworkConfig networkConfig = new NetworkConfig(Config.getString("network.game_clients.address"),
-				Config.getInt("network.game_clients.port"), Config.getInt("network.game_clients.thread_count"));
+				Config.getInt("network.game_clients.port"));
 
 		UDPNetworkThread networkThread = new UDPNetworkThread(networkConfig, new UDPServerHandler());
 
@@ -62,5 +61,8 @@ public class AuthServer {
 
 		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.game_clients.address"),
 				Config.getInt("network.game_clients.port"));
+
+		networkConfig = new NetworkConfig(Config.getString("network.game_servers.address"),
+				Config.getInt("network.game_servers.port"), Config.getInt("network.game_servers.thread_count"));
 	}
 }

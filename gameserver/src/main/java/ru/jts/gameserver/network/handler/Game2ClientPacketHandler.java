@@ -17,7 +17,7 @@
 package ru.jts.gameserver.network.handler;
 
 import io.netty.buffer.ByteBuf;
-import ru.jts.common.network.udp.ClientPacket;
+import ru.jts.common.network.ClientPacket;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
 import ru.jts.gameserver.network.Client;
 

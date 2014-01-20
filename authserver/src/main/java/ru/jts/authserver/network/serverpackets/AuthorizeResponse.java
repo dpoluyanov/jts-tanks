@@ -18,7 +18,7 @@ package ru.jts.authserver.network.serverpackets;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import ru.jts.common.network.udp.Auth2ClientServerPacket;
+import ru.jts.common.network.Auth2ClientServerPacket;
 import ru.jts.common.util.ArrayUtils;
 
 /**

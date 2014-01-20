@@ -30,7 +30,7 @@ public class TestCaseBase extends Assert {
 
 	@BeforeClass
 	public static void testCaseBaseBeforeClass() {
-		if(!UoWFactory.getInstance().isInitialized())
+		if (!UoWFactory.getInstance().isInitialized())
 			UoWFactory.getInstance().init("TEST_PERSISTENCE");
 	}
 

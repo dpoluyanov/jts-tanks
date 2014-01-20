@@ -17,6 +17,8 @@
 package ru.jts.common.network.udp;
 
 import io.netty.buffer.ByteBuf;
+import ru.jts.common.network.ClientPacket;
+import ru.jts.common.network.IClient;
 
 /**
  * @author: Camelion

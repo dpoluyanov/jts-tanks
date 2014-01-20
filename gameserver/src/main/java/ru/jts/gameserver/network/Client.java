@@ -20,8 +20,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
 import ru.jts.common.math.Rnd;
+import ru.jts.common.network.IClient;
 import ru.jts.common.network.udp.Auth2ClientServerPacket;
-import ru.jts.common.network.udp.IClient;
 import ru.jts.common.network.udp.IUDPServerPacketHandler;
 import ru.jts.gameserver.network.handler.Game2ClientPacketHandler;
 

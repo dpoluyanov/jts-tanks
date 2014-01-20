@@ -26,7 +26,7 @@ import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.crypt.CryptEngine;
 import ru.jts.authserver.network.serverpackets.AuthorizeResponse;
 import ru.jts.common.math.Rnd;
-import ru.jts.common.network.udp.ClientPacket;
+import ru.jts.common.network.ClientPacket;
 
 import java.nio.ByteOrder;
 import java.util.HashMap;

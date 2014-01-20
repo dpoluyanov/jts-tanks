@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

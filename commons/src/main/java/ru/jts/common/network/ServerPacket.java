@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

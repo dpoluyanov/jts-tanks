@@ -22,7 +22,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
 import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.ClientManger;
-import ru.jts.common.network.udp.ClientPacket;
+import ru.jts.common.network.ClientPacket;
 import ru.jts.common.threading.ThreadPoolManager;
 
 import java.nio.ByteOrder;

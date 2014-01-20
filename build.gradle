@@ -16,6 +16,9 @@
 
 apply plugin: 'distribution'
 
+distZip.dependsOn(":authserver:distZip")
+distZip.dependsOn(":gameserver:distZip")
+
 distributions {
 	main {
 		baseName = 'JTS-Tanks'
@@ -25,9 +28,6 @@ distributions {
 		}
 	}
 }
-
-distZip.dependsOn(":authserver:distZip")
-distZip.dependsOn(":gameserver:distZip")
 
 subprojects {
 	apply plugin: 'java'

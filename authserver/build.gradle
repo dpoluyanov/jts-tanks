@@ -43,9 +43,9 @@ dependencies {
 
 	compile project(":commons")
 
-	compile 'org.slf4j:slf4j-api:1.7.5'
-
-	compile 'org.bouncycastle:bcprov-jdk16:1.46'
+	compile 'org.slf4j:slf4j-api:+'
+	compile 'org.slf4j:slf4j-log4j12:+'
+	compile 'log4j:log4j:+'
 
 	compile 'mysql:mysql-connector-java:5.1.27'
 
@@ -91,7 +91,7 @@ task copyDist(type: Copy) {
 	into('config') {
 		from 'dist/config/default/'
 	}
-	from ('dist') { include 'key.pem', 'start.bat'}
+	from('dist') { include 'key.pem', 'start.bat' }
 	into('lib') {
 		from configurations.runtime
 		from jar.outputs.files

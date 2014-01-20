@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import ru.jts.gameserver.network.Client;
+import ru.jts.authserver.network.Client;
 import ru.jts.common.util.ArrayUtils;
 
 import java.nio.ByteOrder;

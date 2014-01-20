@@ -20,10 +20,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
+import ru.jts.common.network.ClientPacket;
+import ru.jts.common.threading.ThreadPoolManager;
 import ru.jts.gameserver.network.Client;
 import ru.jts.gameserver.network.ClientManger;
-import ru.jts.common.network.udp.ClientPacket;
-import ru.jts.common.threading.ThreadPoolManager;
 
 import java.nio.ByteOrder;
 

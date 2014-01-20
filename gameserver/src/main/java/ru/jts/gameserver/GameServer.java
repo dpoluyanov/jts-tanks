@@ -18,12 +18,12 @@ package ru.jts.gameserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.jts.gameserver.network.handler.UDPServerHandler;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.network.NetworkConfig;
 import ru.jts.common.network.udp.UDPNetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
+import ru.jts.gameserver.network.handler.UDPServerHandler;
 
 /**
  * @author : Camelion

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import ru.jts.authserver.network.Client;
+import ru.jts.common.network.ServerPacket;
 import ru.jts.common.util.ArrayUtils;
+import ru.jts.gameserver.network.Client;
 
 import java.nio.ByteOrder;
 
@@ -27,7 +28,7 @@ import java.nio.ByteOrder;
  * @author: Camelion
  * @date: 20.01.14/11:50
  */
-public abstract class Auth2ClientServerPacket extends ServerPacket<Client> {
+public abstract class Game2ClientServerPacket extends ServerPacket<Client> {
 
 	@Override
 	public void write() {

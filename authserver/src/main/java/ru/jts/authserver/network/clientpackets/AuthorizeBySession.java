@@ -17,7 +17,7 @@
 package ru.jts.authserver.network.clientpackets;
 
 import ru.jts.authserver.network.Client;
-import ru.jts.common.network.udp.ClientPacket;
+import ru.jts.common.network.ClientPacket;
 
 import java.util.Map;
 

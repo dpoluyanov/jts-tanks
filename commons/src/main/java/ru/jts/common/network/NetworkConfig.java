@@ -26,6 +26,10 @@ public class NetworkConfig {
 	private final int threadCount;
 	private final InetSocketAddress socketAddress;
 
+	public NetworkConfig(String address, int port) {
+		this(address, port, 1);
+	}
+
 	public NetworkConfig(String address, int port, int threadCount) {
 		this.threadCount = threadCount;
 
