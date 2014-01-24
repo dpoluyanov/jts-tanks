@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package ru.jts.gameserver.network.handler;
+package ru.jts.authserver.network.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
+import ru.jts.authserver.network.Client;
+import ru.jts.authserver.network.ClientManger;
 import ru.jts.common.network.ClientPacket;
 import ru.jts.common.threading.ThreadPoolManager;
-import ru.jts.gameserver.network.Client;
-import ru.jts.gameserver.network.ClientManger;
 
 import java.nio.ByteOrder;
 
@@ -31,7 +31,7 @@ import java.nio.ByteOrder;
  * @author: Camelion
  * @date: 01.11.13/22:35
  */
-public class UDPServerHandler extends SimpleChannelInboundHandler<DatagramPacket> {
+public class AuthClientsChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
 	@Override
 	public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {

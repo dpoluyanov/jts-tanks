@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.authserver.network.handler;
 
 import io.netty.buffer.ByteBuf;
-import ru.jts.common.network.ClientPacket;
-import ru.jts.common.network.IClient;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import ru.jts.common.util.ArrayUtils;
 
 /**
  * @author: Camelion
- * @date: 01.11.13/23:14
+ * @date: 21.01.14/2:45
  */
-public interface IUDPServerPacketHandler<T extends IClient> {
-	/**
-	 * * Обрабатывает буффер, формирует из него пакет
-	 *
-	 * @param buf - буффер с данными
-	 * @return пакет, готовый для обработки, либо null
-	 */
-	ClientPacket<T> handlePacket(ByteBuf buf);
+public class GameServersChannelHandler extends LengthFieldBasedFrameDecoder {
+	public GameServersChannelHandler() {
+		super(Integer.MAX_VALUE, 0, 2, 2, 0);
+	}
 
-	ByteBuf encrypt(ByteBuf buf);
+	@Override
+	protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+		ByteBuf buf = (ByteBuf) super.decode(ctx, in);
+		System.out.println(ArrayUtils.bytesToHexString(buf.array()));
+		return buf;
+	}
 }

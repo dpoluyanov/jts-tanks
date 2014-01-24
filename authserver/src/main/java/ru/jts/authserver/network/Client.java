@@ -19,11 +19,11 @@ package ru.jts.authserver.network;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
-import ru.jts.authserver.network.handler.Client2AuthPacketHandler;
+import ru.jts.authserver.network.handler.packet.Client2AuthPacketHandler;
 import ru.jts.common.math.Rnd;
 import ru.jts.common.network.IClient;
-import ru.jts.common.network.udp.Auth2ClientServerPacket;
-import ru.jts.common.network.udp.IUDPServerPacketHandler;
+import ru.jts.common.network.IPacketHandler;
+import ru.jts.common.network.Auth2ClientServerPacket;
 
 import java.net.InetSocketAddress;
 
@@ -35,7 +35,7 @@ import java.net.InetSocketAddress;
 public class Client implements IClient {
 
 	private Channel channel;
-	private IUDPServerPacketHandler<Client> packetHandler;
+	private IPacketHandler<Client> packetHandler;
 	private byte[] blowFishKey;
 	private int randomKey;
 	private String token2;
@@ -47,7 +47,7 @@ public class Client implements IClient {
 		this.myAddress = myAddress;
 	}
 
-	public IUDPServerPacketHandler<Client> getPacketHandler() {
+	public IPacketHandler<Client> getPacketHandler() {
 		return packetHandler;
 	}
 

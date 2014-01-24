@@ -14,40 +14,34 @@
  * limitations under the License.
  */
 
-package ru.jts.common.network.udp;
+package ru.jts.common.network;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioDatagramChannel;
-import ru.jts.common.network.NetworkConfig;
 
 /**
  * @author: Camelion
  * @date: 01.11.13/22:25
  */
-public class UDPNetworkThread extends Thread {
-	private final NetworkConfig networkConfig;
-	private final ChannelHandler channelHandler;
+public class NetworkThread extends Thread {
+	private final Bootstrap b;
+	private final boolean server;
 
-	public UDPNetworkThread(NetworkConfig networkConfig, ChannelHandler channelHandler) {
-		this.networkConfig = networkConfig;
-		this.channelHandler = channelHandler;
+	public NetworkThread(Bootstrap b, boolean server) {
+		this.b = b;
+		this.server = server;
 	}
 
 	@Override
 	public void run() {
 		EventLoopGroup group = new NioEventLoopGroup();
 		try {
-			Bootstrap b = new Bootstrap();
-			b.group(group)
-					.channel(NioDatagramChannel.class)
-					.option(ChannelOption.SO_BROADCAST, true)
-					.handler(channelHandler);
-
-			b.bind(networkConfig.getSocketAddress()).sync().channel().closeFuture().await();
+			b.group(group);
+			if(server)
+				b.bind().sync().channel().closeFuture().await();
+			else
+				b.connect().sync();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {

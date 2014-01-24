@@ -16,30 +16,24 @@
 
 package ru.jts.common.network;
 
-import java.net.InetSocketAddress;
+import io.netty.buffer.ByteBuf;
+import ru.jts.common.network.ClientPacket;
+import ru.jts.common.network.IClient;
 
 /**
- * @author : Camelion
- * @date : 13.08.12  13:44
+ * @author: Camelion
+ * @date: 01.11.13/23:14
  */
-public class NetworkConfig {
-	private final int threadCount;
-	private final InetSocketAddress socketAddress;
+public interface IPacketHandler<T extends IClient> {
+	/**
+	 * * Обрабатывает буффер, формирует из него пакет
+	 *
+	 * @param buf - буффер с данными
+	 * @return пакет, готовый для обработки, либо null
+	 */
+	ClientPacket<T> handlePacket(ByteBuf buf);
 
-	public NetworkConfig(String address, int port) {
-		this(address, port, 1);
-	}
+	ByteBuf encrypt(ByteBuf buf);
 
-	public NetworkConfig(String address, int port, int threadCount) {
-		this.threadCount = threadCount;
-
-		if (address.equals("*"))
-			socketAddress = new InetSocketAddress(port);
-		else
-			socketAddress = new InetSocketAddress(address, port);
-	}
-
-	public InetSocketAddress getSocketAddress() {
-		return socketAddress;
-	}
+	ByteBuf decrypt(ByteBuf buf);
 }

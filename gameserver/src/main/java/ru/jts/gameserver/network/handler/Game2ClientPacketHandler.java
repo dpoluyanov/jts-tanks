@@ -18,14 +18,14 @@ package ru.jts.gameserver.network.handler;
 
 import io.netty.buffer.ByteBuf;
 import ru.jts.common.network.ClientPacket;
-import ru.jts.common.network.udp.IUDPServerPacketHandler;
+import ru.jts.common.network.IPacketHandler;
 import ru.jts.gameserver.network.Client;
 
 /**
  * @author: Camelion
  * @date: 20.01.14/16:11
  */
-public class Game2ClientPacketHandler implements IUDPServerPacketHandler<Client> {
+public class Game2ClientPacketHandler implements IPacketHandler<Client> {
 	private static Game2ClientPacketHandler ourInstance = new Game2ClientPacketHandler();
 
 	public static Game2ClientPacketHandler getInstance() {
@@ -39,6 +39,11 @@ public class Game2ClientPacketHandler implements IUDPServerPacketHandler<Client>
 
 	@Override
 	public ByteBuf encrypt(ByteBuf buf) {
+		return null;
+	}
+
+	@Override
+	public ByteBuf decrypt(ByteBuf buf) {
 		return null;
 	}
 }

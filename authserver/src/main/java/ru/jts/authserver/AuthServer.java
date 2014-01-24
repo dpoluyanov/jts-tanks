@@ -16,13 +16,15 @@
 
 package ru.jts.authserver;
 
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.jts.authserver.network.handler.UDPServerHandler;
+import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
-import ru.jts.common.network.NetworkConfig;
-import ru.jts.common.network.udp.UDPNetworkThread;
+import ru.jts.common.network.NetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
 
 /**
@@ -48,21 +50,27 @@ public class AuthServer {
 
 		log.info("UoWFactory loaded.");
 
-		startNetworkServers();
+		startNetworkServer();
 	}
 
-	public static void startNetworkServers() {
-		NetworkConfig networkConfig = new NetworkConfig(Config.getString("network.game_clients.address"),
-				Config.getInt("network.game_clients.port"));
+	public static void startNetworkServer() {
+		Bootstrap bootstrap = new Bootstrap();
+		bootstrap.option(ChannelOption.SO_BROADCAST, true);
+		bootstrap.channel(NioDatagramChannel.class).handler(new AuthClientsChannelHandler());
 
-		UDPNetworkThread networkThread = new UDPNetworkThread(networkConfig, new UDPServerHandler());
+		String host = Config.getString("network.auth_clients.address");
+		int port = Config.getInt("network.auth_clients.port");
+		if (host.equals("*")) {
+			bootstrap.localAddress(port);
+		} else {
+			bootstrap.localAddress(host, port);
+		}
 
-		networkThread.start();
+		NetworkThread clientsNetworkThread = new NetworkThread(bootstrap, true);
 
-		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.game_clients.address"),
-				Config.getInt("network.game_clients.port"));
+		clientsNetworkThread.start();
 
-		networkConfig = new NetworkConfig(Config.getString("network.game_servers.address"),
-				Config.getInt("network.game_servers.port"), Config.getInt("network.game_servers.thread_count"));
+		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.auth_clients.address"),
+				Config.getInt("network.auth_clients.port"));
 	}
 }

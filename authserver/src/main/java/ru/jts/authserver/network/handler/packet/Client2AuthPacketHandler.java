@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.authserver.network.handler;
+package ru.jts.authserver.network.handler.packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -24,7 +24,7 @@ import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.clientpackets.AuthorizeByPassword;
 import ru.jts.authserver.network.crypt.RSAEngine;
 import ru.jts.common.network.ClientPacket;
-import ru.jts.common.network.udp.IUDPServerPacketHandler;
+import ru.jts.common.network.IPacketHandler;
 import ru.jts.common.util.ArrayUtils;
 
 import java.nio.ByteOrder;
@@ -33,7 +33,7 @@ import java.nio.ByteOrder;
  * @author : Camelion
  * @date : 20.08.12  14:55
  */
-public class Client2AuthPacketHandler implements IUDPServerPacketHandler<Client> {
+public class Client2AuthPacketHandler implements IPacketHandler<Client> {
 	private static final Logger log = LoggerFactory.getLogger(Client2AuthPacketHandler.class);
 
 	private static Client2AuthPacketHandler ourInstance = new Client2AuthPacketHandler();
@@ -88,6 +88,11 @@ public class Client2AuthPacketHandler implements IUDPServerPacketHandler<Client>
 
 	@Override
 	public ByteBuf encrypt(ByteBuf buf) {
+		return buf;
+	}
+
+	@Override
+	public ByteBuf decrypt(ByteBuf buf) {
 		return buf;
 	}
 

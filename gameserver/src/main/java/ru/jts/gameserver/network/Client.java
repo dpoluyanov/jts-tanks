@@ -20,9 +20,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
 import ru.jts.common.math.Rnd;
+import ru.jts.common.network.Game2ClientServerPacket;
 import ru.jts.common.network.IClient;
-import ru.jts.common.network.udp.Auth2ClientServerPacket;
-import ru.jts.common.network.udp.IUDPServerPacketHandler;
+import ru.jts.common.network.IPacketHandler;
 import ru.jts.gameserver.network.handler.Game2ClientPacketHandler;
 
 import java.net.InetSocketAddress;
@@ -35,7 +35,7 @@ import java.net.InetSocketAddress;
 public class Client implements IClient {
 
 	private Channel channel;
-	private IUDPServerPacketHandler<Client> packetHandler;
+	private IPacketHandler<Client> packetHandler;
 	private byte[] blowFishKey;
 	private int randomKey;
 	private String token2;
@@ -47,11 +47,11 @@ public class Client implements IClient {
 		this.myAddress = myAddress;
 	}
 
-	public IUDPServerPacketHandler<Client> getPacketHandler() {
+	public IPacketHandler<Client> getPacketHandler() {
 		return packetHandler;
 	}
 
-	public void sendPacket(Auth2ClientServerPacket packet) {
+	public void sendPacket(Game2ClientServerPacket packet) {
 		packet.setClient(this);
 		packet.write();
 
@@ -75,14 +75,5 @@ public class Client implements IClient {
 
 	public void setRandomKey(int randomKey) {
 		this.randomKey = randomKey;
-	}
-
-	public String generateToken2() {
-		StringBuilder token = new StringBuilder();
-		for (int i = 0; i < 39; i++) {
-			token.append(Rnd.nextDigest());
-		}
-
-		return token2 = "1234567" + ":" + "1234567890123456789" + ":" + token;
 	}
 }
