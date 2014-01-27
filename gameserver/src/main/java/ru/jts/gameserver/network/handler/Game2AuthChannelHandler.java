@@ -34,6 +34,11 @@ import java.nio.ByteOrder;
 public class Game2AuthChannelHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
 	@Override
+	public void channelRegistered(ChannelHandlerContext ctx) {
+		System.out.println("Registered");
+	}
+
+	@Override
 	public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
 		Client client = ClientManger.getInstance().getClientCreateIfNeed(packet.sender(), ctx.channel());
 

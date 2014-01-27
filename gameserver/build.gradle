@@ -42,46 +42,13 @@ dependencies {
 
 	compile project(":commons")
 
+	compile 'org.bouncycastle:bcprov-jdk16:+'
+
 	compile 'org.slf4j:slf4j-api:+'
 	compile 'org.slf4j:slf4j-log4j12:+'
 	compile 'log4j:log4j:+'
 
-	compile 'org.bouncycastle:bcprov-jdk16:+'
-
-	compile 'mysql:mysql-connector-java:5.1.27'
-
-	compile 'org.hibernate:hibernate-core:4.3.0.Final'
-	compile 'org.hibernate:hibernate-entitymanager:4.3.0.Final'
-
-	compile('com.mysema.querydsl:querydsl-core:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
-	compile('com.mysema.querydsl:querydsl-jpa:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
-	compile('com.mysema.querydsl:querydsl-sql:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
-
-	querydslapt 'com.mysema.querydsl:querydsl-apt:3.3.0'
-
 	compile fileTree(dir: 'lib', include: '*.jar')
-}
-
-task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
-	source = sourceSets.main.java
-	classpath = configurations.compile + configurations.querydslapt
-	options.compilerArgs = [
-			"-proc:only",
-			"-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
-	]
-	options.encoding = 'UTF-8'
-	destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-}
-
-compileJava {
-	dependsOn generateQueryDSL
-	source generateQueryDSL.destinationDir
-}
-
-compileGeneratedJava {
-	dependsOn generateQueryDSL
-	options.warnings = false
-	classpath += sourceSets.main.runtimeClasspath
 }
 
 task copyDist(type: Copy) {
@@ -109,15 +76,5 @@ distributions {
 		contents {
 			from copyDist
 		}
-	}
-}
-
-clean {
-	delete sourceSets.generated.java.srcDirs
-}
-
-idea {
-	module {
-		sourceDirs += file('src/generated/java')
 	}
 }

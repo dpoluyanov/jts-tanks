@@ -30,12 +30,6 @@
 			<param name="ConversionPattern" value="[%d{dd.MM.yy HH:mm:ss:SSS}] %5p %c{2}: %m%n"/>
 		</layout>
 	</appender>
-	<logger name="org.hibernate">
-		<level value="warn"/>
-	</logger>
-	<logger name="org.jboss.logging">
-		<level value="warn"/>
-	</logger>
 	<logger name="io.netty">
 		<level value="warn"/>
 	</logger>

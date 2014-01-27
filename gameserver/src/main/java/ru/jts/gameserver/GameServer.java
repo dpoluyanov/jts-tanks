@@ -37,7 +37,7 @@ public class GameServer {
 
 	static {
 		Config.load("config/developers.properties");
-		Config.load("config/authserver.properties");
+		Config.load("config/server.properties");
 		Config.load("config/network.properties");
 		Config.load("config/thread_pool_manager.properties");
 	}
