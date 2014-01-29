@@ -47,12 +47,14 @@ dependencies {
 	compile 'org.slf4j:slf4j-log4j12:+'
 	compile 'log4j:log4j:+'
 
+	compile 'io.netty:netty-all:4.0.+'
+
 	compile 'org.bouncycastle:bcprov-jdk16:+'
 
-	compile 'mysql:mysql-connector-java:5.1.27'
+	compile 'mysql:mysql-connector-java:+'
 
-	compile 'org.hibernate:hibernate-core:4.3.0.Final'
-	compile 'org.hibernate:hibernate-entitymanager:4.3.0.Final'
+	compile 'org.hibernate:hibernate-core:4.+'
+	compile 'org.hibernate:hibernate-entitymanager:4.+'
 
 	compile('com.mysema.querydsl:querydsl-core:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }
 	compile('com.mysema.querydsl:querydsl-jpa:3.3.0') { exclude module: 'hibernate-jpa-2.0-api' }

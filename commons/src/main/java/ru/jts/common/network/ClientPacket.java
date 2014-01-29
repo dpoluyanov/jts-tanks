@@ -54,10 +54,9 @@ public abstract class ClientPacket<T extends IClient> implements Runnable {
 
 		ObjectMapper om = new ObjectMapper();
 		try {
-			Map<String, String> mapObject = om.readValue(json, new TypeReference<Map<String, String>>() {
-			});
 
-			return mapObject;
+			return om.readValue(json, new TypeReference<Map<String, String>>() {
+			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

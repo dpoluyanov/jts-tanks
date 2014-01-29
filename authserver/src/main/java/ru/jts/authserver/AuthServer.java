@@ -19,10 +19,12 @@ package ru.jts.authserver;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.jts.authserver.info.PrintInfo;
 import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
+import ru.jts.authserver.network.handler.GameServersChannelHandler;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.network.NetworkThread;
@@ -61,6 +63,7 @@ public class AuthServer {
 	}
 
 	public static void startNetworkServer() {
+		// For Game Clients
 		Bootstrap bootstrap = new Bootstrap();
 		bootstrap.option(ChannelOption.SO_BROADCAST, true);
 		bootstrap.channel(NioDatagramChannel.class).handler(new AuthClientsChannelHandler());
@@ -78,6 +81,22 @@ public class AuthServer {
 		clientsNetworkThread.start();
 
 		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.auth_clients.address"),
+				Config.getInt("network.auth_clients.port"));
+
+		// For Game Servers
+		bootstrap = new Bootstrap();
+		bootstrap.channel(NioServerSocketChannel.class).handler(new GameServersChannelHandler());
+		host = Config.getString("network.auth_clients.address");
+		if (host.equals("*")) {
+			bootstrap.localAddress(port);
+		} else {
+			bootstrap.localAddress(host, port);
+		}
+
+		NetworkThread serversNetworkThread = new NetworkThread(bootstrap, true);
+		serversNetworkThread.start();
+
+		log.info("Servers NetworkThread loaded on {}:{}", Config.getString("network.auth_clients.address"),
 				Config.getInt("network.auth_clients.port"));
 	}
 }

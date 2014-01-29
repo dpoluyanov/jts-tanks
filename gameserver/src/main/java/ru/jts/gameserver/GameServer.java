@@ -19,13 +19,15 @@ package ru.jts.gameserver;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.network.NetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
-import ru.jts.gameserver.network.handler.Game2AuthChannelHandler;
+import ru.jts.gameserver.network.handler.Auth2GameDecoder;
+import ru.jts.gameserver.network.handler.Game2AuthChannelInitializer;
 import ru.jts.gameserver.network.handler.Game2ClientChannelHandler;
 
 /**
@@ -79,8 +81,7 @@ public class GameServer {
 
 	private static void startNetworkClient() {
 		Bootstrap bootstrap = new Bootstrap();
-		bootstrap.option(ChannelOption.SO_BROADCAST, true);
-		bootstrap.channel(NioDatagramChannel.class).handler(new Game2AuthChannelHandler());
+		bootstrap.channel(NioSocketChannel.class).handler(new Game2AuthChannelInitializer());
 
 		String host = Config.getString("network.auth_server.address");
 		int port = Config.getInt("network.auth_server.port");

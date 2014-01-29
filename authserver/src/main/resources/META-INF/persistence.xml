@@ -30,7 +30,7 @@
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 			<property name="hibernate.connection.url"
 			          value="jdbc:mysql://localhost/tanks?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true"/>
-			<property name="hibernate.connection.pool_size" value="4"/>
+			<property name="hibernate.connection.pool_size" value="20"/>
 			<property name="hibernate.connection.username" value="root"/>
 			<property name="hibernate.connection.password" value="root"/>
 		</properties>
