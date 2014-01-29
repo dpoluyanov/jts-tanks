@@ -22,7 +22,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.jts.authserver.info.PrintInfo;
+import ru.jts.common.info.*;
 import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
 import ru.jts.authserver.network.handler.GameServersChannelHandler;
 import ru.jts.common.configuration.Config;

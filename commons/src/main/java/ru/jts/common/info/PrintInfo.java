@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.authserver.info;
+package ru.jts.common.info;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

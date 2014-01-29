@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ru.jts.authserver.info;
+package ru.jts.common.info;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
