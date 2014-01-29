@@ -21,6 +21,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.jts.authserver.info.PrintInfo;
 import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
 import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
@@ -35,6 +36,7 @@ public class AuthServer {
 	private static final Logger log = LoggerFactory.getLogger(AuthServer.class);
 
 	static {
+        PrintInfo.getInstance().printSection("Properties");
 		Config.load("config/developers.properties");
 		Config.load("config/authserver.properties");
 		Config.load("config/network.properties");
@@ -44,13 +46,18 @@ public class AuthServer {
 	public static void main(String[] args) {
 		ThreadPoolManager.getInstance().init(Config.getInt("thread_pool_manager.scheduled_thread_pool_size"),
 				Config.getInt("thread_pool_manager.executor_thread_pool_size"));
+        PrintInfo.getInstance().printSection("ThreadPoolManager");
 		log.info("ThreadPoolManager created.");
 
+        PrintInfo.getInstance().printSection("UoWFactory");
 		UoWFactory.getInstance().init("PersistenceUnit");
-
 		log.info("UoWFactory loaded.");
 
-		startNetworkServer();
+        PrintInfo.getInstance().printSection("Load information");
+        PrintInfo.getInstance().printLoadInfos();
+
+        PrintInfo.getInstance().printSection("Network");
+        startNetworkServer();
 	}
 
 	public static void startNetworkServer() {
