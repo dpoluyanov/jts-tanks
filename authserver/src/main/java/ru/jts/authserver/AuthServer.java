@@ -41,9 +41,9 @@ public class AuthServer {
 	public static void main(String[] args) {
         PrintInfo.getInstance().printSection("Properties");
         AuthServerProperty.getInstance();
+        PrintInfo.getInstance().printSection("ThreadPoolManager");
         ThreadPoolManager.getInstance().init(AuthServerProperty.getInstance().AUTH_SCHEDULED_THREAD_POOL_SIZE,
 				                             AuthServerProperty.getInstance().AUTH_EXECUTOR_THREAD_POOL_SIZE);
-        PrintInfo.getInstance().printSection("ThreadPoolManager");
 		log.info("ThreadPoolManager created.");
         PrintInfo.getInstance().printSection("UoWFactory");
 		UoWFactory.getInstance().init("PersistenceUnit");
