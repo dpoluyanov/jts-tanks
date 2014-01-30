@@ -22,39 +22,32 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.jts.authserver.configuration.AuthServerProperty;
 import ru.jts.common.info.*;
 import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
 import ru.jts.authserver.network.handler.GameServersChannelHandler;
-import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.network.NetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
 
 /**
- * @author : Camelion
- * @date : 10.08.12  1:07
+ * @author : Camelion, Grizly(Skype: r-grizly)
+ * @since  : 10.08.12  1:07
+ * @last   : 31.01.2014
  */
 public class AuthServer {
 	private static final Logger log = LoggerFactory.getLogger(AuthServer.class);
 
-	static {
-        PrintInfo.getInstance().printSection("Properties");
-		Config.load("config/developers.properties");
-		Config.load("config/authserver.properties");
-		Config.load("config/network.properties");
-		Config.load("config/thread_pool_manager.properties");
-	}
-
 	public static void main(String[] args) {
-		ThreadPoolManager.getInstance().init(Config.getInt("thread_pool_manager.scheduled_thread_pool_size"),
-				Config.getInt("thread_pool_manager.executor_thread_pool_size"));
+        PrintInfo.getInstance().printSection("Properties");
+        AuthServerProperty.getInstance();
+        ThreadPoolManager.getInstance().init(AuthServerProperty.getInstance().AUTH_SCHEDULED_THREAD_POOL_SIZE,
+				                             AuthServerProperty.getInstance().AUTH_EXECUTOR_THREAD_POOL_SIZE);
         PrintInfo.getInstance().printSection("ThreadPoolManager");
 		log.info("ThreadPoolManager created.");
-
         PrintInfo.getInstance().printSection("UoWFactory");
 		UoWFactory.getInstance().init("PersistenceUnit");
 		log.info("UoWFactory loaded.");
-
         PrintInfo.getInstance().printSection("Load information");
         PrintInfo.getInstance().printLoadInfos();
 
@@ -68,8 +61,8 @@ public class AuthServer {
 		bootstrap.option(ChannelOption.SO_BROADCAST, true);
 		bootstrap.channel(NioDatagramChannel.class).handler(new AuthClientsChannelHandler());
 
-		String host = Config.getString("network.auth_clients.address");
-		int port = Config.getInt("network.auth_clients.port");
+		String host = AuthServerProperty.getInstance().AUTH_CLIENT_HOST;
+		int port = AuthServerProperty.getInstance().AUTH_CLIENT_PORT;
 		if (host.equals("*")) {
 			bootstrap.localAddress(port);
 		} else {
@@ -80,13 +73,12 @@ public class AuthServer {
 
 		clientsNetworkThread.start();
 
-		log.info("Clients NetworkThread loaded on {}:{}", Config.getString("network.auth_clients.address"),
-				Config.getInt("network.auth_clients.port"));
+		log.info("Clients NetworkThread loaded on {}:{}", host, port);
 
+        //TODO Переделаю этот бардак чутка позже
 		// For Game Servers
 		bootstrap = new Bootstrap();
 		bootstrap.channel(NioServerSocketChannel.class).handler(new GameServersChannelHandler());
-		host = Config.getString("network.auth_clients.address");
 		if (host.equals("*")) {
 			bootstrap.localAddress(port);
 		} else {
@@ -96,7 +88,6 @@ public class AuthServer {
 		NetworkThread serversNetworkThread = new NetworkThread(bootstrap, true);
 		serversNetworkThread.start();
 
-		log.info("Servers NetworkThread loaded on {}:{}", Config.getString("network.auth_clients.address"),
-				Config.getInt("network.auth_clients.port"));
+		log.info("Servers NetworkThread loaded on {}:{}", host, port);
 	}
 }
