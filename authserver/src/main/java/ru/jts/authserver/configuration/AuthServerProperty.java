@@ -21,6 +21,7 @@ import ru.jts.common.configuration.PropertiesLoader;
 /**
  * @author Grizly(Skype: r-grizly)
  * @since 31.01.2014
+ * @last 1.02.2014
  */
 public class AuthServerProperty extends PropertiesLoader {
 
@@ -28,6 +29,7 @@ public class AuthServerProperty extends PropertiesLoader {
     public final Integer AUTH_CLIENT_PORT = loadInteger("auth.client.port");
     public final Integer AUTH_SCHEDULED_THREAD_POOL_SIZE = loadInteger("auth.scheduled.thread.pool.size");
     public final Integer AUTH_EXECUTOR_THREAD_POOL_SIZE = loadInteger("auth.executor.thread.pool.size");
+    public final Boolean ACCOUNT_AUTO_CREATE = loadBoolean("account.auto.create");
 
     private AuthServerProperty() {
         super("auth.properties");

@@ -48,7 +48,11 @@ public class AccountsDAO {
 		return account;
 	}
 
-	public void saveAccount(Account account) {
+    /**
+     * @return true если транзакция прошла успешно
+     *         false если транзакция прошла не успешно
+     */
+    public boolean saveAccount(Account account) {
 		try (IUnitOfWork uow = UoWFactory.getInstance().createUoW()) {
 			ITransaction transaction = uow.beginTransaction();
 			try {
@@ -57,7 +61,9 @@ public class AccountsDAO {
 			} catch (Exception e) {
 				log.warn("Exception in saveAccount() for account '" + account.getLogin() + "'", e);
 				transaction.rollbackIfActive();
+                return false;
 			}
+            return true;
 		}
 	}
 }

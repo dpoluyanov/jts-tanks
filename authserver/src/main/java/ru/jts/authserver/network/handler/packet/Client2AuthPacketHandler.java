@@ -21,7 +21,7 @@ import io.netty.buffer.Unpooled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.jts.authserver.network.Client;
-import ru.jts.authserver.network.clientpackets.AuthorizeByPassword;
+import ru.jts.authserver.network.clientpackets.CM_AUTH_BY_PASS;
 import ru.jts.authserver.network.crypt.RSAEngine;
 import ru.jts.common.network.ClientPacket;
 import ru.jts.common.network.IPacketHandler;
@@ -68,7 +68,7 @@ public class Client2AuthPacketHandler implements IPacketHandler<Client> {
 		ClientPacket<Client> packet = null;
 		switch (opcode) {
 			case 0x01:
-				packet = new AuthorizeByPassword(sessionId);
+				packet = new CM_AUTH_BY_PASS(sessionId);
 				break;
 			//case 0x02:
 			//    packet = new AuthorizeBySession();

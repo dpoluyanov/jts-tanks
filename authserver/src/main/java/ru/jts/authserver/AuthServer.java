@@ -23,6 +23,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.jts.authserver.configuration.AuthServerProperty;
+import ru.jts.authserver.controllers.LoaderController;
 import ru.jts.common.info.*;
 import ru.jts.authserver.network.handler.AuthClientsChannelHandler;
 import ru.jts.authserver.network.handler.GameServersChannelHandler;
@@ -48,6 +49,10 @@ public class AuthServer {
         PrintInfo.getInstance().printSection("UoWFactory");
 		UoWFactory.getInstance().init("PersistenceUnit");
 		log.info("UoWFactory loaded.");
+
+        PrintInfo.getInstance().printSection("Controllers");
+        LoaderController.loadControllers();
+
         PrintInfo.getInstance().printSection("Load information");
         PrintInfo.getInstance().printLoadInfos();
 

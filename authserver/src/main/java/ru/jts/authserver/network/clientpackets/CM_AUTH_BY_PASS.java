@@ -20,11 +20,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import ru.jts.authserver.controllers.AccountController;
 import ru.jts.authserver.database.AccountsDAO;
 import ru.jts.authserver.model.Account;
 import ru.jts.authserver.network.Client;
 import ru.jts.authserver.network.crypt.CryptEngine;
-import ru.jts.authserver.network.serverpackets.AuthorizeResponse;
+import ru.jts.authserver.network.serverpackets.SM_AUTH_RESPONSE;
+import ru.jts.common.enums.State;
 import ru.jts.common.math.Rnd;
 import ru.jts.common.network.ClientPacket;
 
@@ -33,17 +35,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author: Camelion
+ * @author: Camelion, Grizly(Skype: r-grizly)
  * @date: 02.11.13/0:43
+ * @last: 1.02.2014
  */
-public class AuthorizeByPassword extends ClientPacket<Client> {
+//TODO Клиент очень сильно флудит этим пакетом надо сделать чтобы прошел один раз, остальные игнорил.
+public class CM_AUTH_BY_PASS extends ClientPacket<Client> {
 	private static final String JSON_LOGIN = "login";
 
 	private final short sessionId;
 	private byte[] blowFishKey;
 	private Map<String, String> jsonMap;
+    String password;
 
-	public AuthorizeByPassword(short sessionId) {
+	public CM_AUTH_BY_PASS(short sessionId) {
 		this.sessionId = sessionId;
 	}
 
@@ -53,7 +58,7 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
 		//// session = md5Hex of Client HWID
 		jsonMap = readJson();
 		byte passLength = readByte();
-		String pass = readString(passLength); // plain pass
+        password = readString(passLength); // plain pass
 		byte blowFishLength = readByte();
 		blowFishKey = readBytes(blowFishLength);
 		byte[] unk = readBytes(16); // unknown
@@ -63,7 +68,7 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
 
 	@Override
 	public void runImpl() {
-		Account account = AccountsDAO.getInstance().restoreByLogin(jsonMap.get(JSON_LOGIN));
+		//Account account = AccountsDAO.getInstance().restoreByLogin(jsonMap.get(JSON_LOGIN));
 
 		getClient().setBlowFishKey(blowFishKey);
 		getClient().setRandomKey(Rnd.nextInt());
@@ -75,14 +80,14 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
 
 		buf.writeInt(getClient().getRandomKey());
 
-		Map<String, String> jsonMap = new HashMap<>();
+		Map<String, String> jsonMapp = new HashMap<>();
 		//jsonMap.put("security_msg", "old_pass");
-		jsonMap.put("token2", getClient().generateToken2());
+		jsonMapp.put("token2", getClient().generateToken2());
 
 		ObjectMapper mapper = new ObjectMapper();
 		String json = null;
 		try {
-			json = mapper.writeValueAsString(jsonMap);
+			json = mapper.writeValueAsString(jsonMapp);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 			return;
@@ -92,8 +97,19 @@ public class AuthorizeByPassword extends ClientPacket<Client> {
 
 		byte[] cryptedData = CryptEngine.getInstance().encrypt(buf.copy().array(), getClient().getBlowFishKey(), CryptEngine.ZERO_TRAILING_MODE);
 
-		getClient().sendPacket(new AuthorizeResponse(sessionId, AuthorizeResponse.LOGIN_OK, cryptedData));
 
-		//getClient().sendPacket(new AuthorizeResponse(sessionId, AuthorizeResponse.LOGIN_REJECTED_INVALID_PASSWORD));
+        State state = AccountController.getInstance().accountLogin(jsonMap, password);
+        switch (state) {
+            case AUTHED: {
+                getClient().sendPacket(new SM_AUTH_RESPONSE(sessionId, SM_AUTH_RESPONSE.LOGIN_OK, cryptedData));
+                break;
+            }
+            case ALREADY_AUTHED: {
+                getClient().sendPacket(new SM_AUTH_RESPONSE(sessionId, SM_AUTH_RESPONSE.LOGIN_REJECTED_ALREADY_LOGGED_IN, cryptedData));
+                break;
+            }
+            default: {
+            }
+        }
 	}
 }

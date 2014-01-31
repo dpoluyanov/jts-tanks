@@ -25,7 +25,7 @@ import java.util.Map;
  * @author: Camelion
  * @date: 12.11.13/14:06
  */
-public class AuthorizeBySession extends ClientPacket<Client> {
+public class CM_AUTH_BY_SESSION extends ClientPacket<Client> {
 	@Override
 	public void readImpl() {
 		Map<String, String> jsonMsg = readJson();
