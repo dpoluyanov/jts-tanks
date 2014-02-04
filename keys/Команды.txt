@@ -1,5 +1,5 @@
 // Генерация RSA ключей
 openssl genrsa -out key.pem 2048
 
-// Public key для клиента
+// Public key
 openssl rsa -in key.pem -pubout > key.pubkey

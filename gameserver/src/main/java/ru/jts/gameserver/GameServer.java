@@ -22,20 +22,18 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.jts.common.configuration.Config;
 import ru.jts.common.database.UoWFactory;
 import ru.jts.common.info.PrintInfo;
 import ru.jts.common.network.NetworkThread;
 import ru.jts.common.threading.ThreadPoolManager;
 import ru.jts.gameserver.configuration.GameServerProperty;
-import ru.jts.gameserver.network.handler.Auth2GameDecoder;
 import ru.jts.gameserver.network.handler.Game2AuthChannelInitializer;
 import ru.jts.gameserver.network.handler.Game2ClientChannelHandler;
 
 /**
  * @author : Camelion, Grizly(Skype: r-grizly)
- * @date   : 20.01.14  15:52
- * @last   : 31.01.2014
+ * @date : 20.01.14  15:52
+ * @last : 31.01.2014
  */
 
 public class GameServer {
@@ -43,21 +41,21 @@ public class GameServer {
 
 
 	public static void main(String[] args) {
-        PrintInfo.getInstance().printSection("Properties");
-        GameServerProperty.getInstance();
-        PrintInfo.getInstance().printSection("ThreadPoolManager");
+		PrintInfo.getInstance().printSection("Properties");
+		GameServerProperty.getInstance();
+		PrintInfo.getInstance().printSection("ThreadPoolManager");
 		ThreadPoolManager.getInstance().init(GameServerProperty.getInstance().GAME_SCHEDULED_THREAD_POOL_SIZE,
-                                             GameServerProperty.getInstance().GAME_EXECUTOR_THREAD_POOL_SIZE);
+				GameServerProperty.getInstance().GAME_EXECUTOR_THREAD_POOL_SIZE);
 		log.info("ThreadPoolManager created.");
 
-        PrintInfo.getInstance().printSection("UoWFactory");
+		PrintInfo.getInstance().printSection("UoWFactory");
 		UoWFactory.getInstance().init("PersistenceUnit");
-        log.info("UoWFactory loaded.");
+		log.info("UoWFactory loaded.");
 
-        PrintInfo.getInstance().printSection("Load information");
-        PrintInfo.getInstance().printLoadInfos();
+		PrintInfo.getInstance().printSection("Load information");
+		PrintInfo.getInstance().printLoadInfos();
 
-        PrintInfo.getInstance().printSection("Network");
+		PrintInfo.getInstance().printSection("Network");
 		startNetworkServer();
 		startNetworkClient();
 	}
